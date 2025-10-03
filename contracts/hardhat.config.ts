@@ -1,14 +1,15 @@
 import { HardhatUserConfig, vars } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "@parity/hardhat-polkadot";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const privateKey = process.env.PRIVATE_KEY;
-if (!privateKey) {
+// Get private key from Hardhat vars (more secure than .env)
+// Set with: npx hardhat vars set PRIVATE_KEY
+let privateKey: string | undefined;
+try {
+  privateKey = vars.get("PRIVATE_KEY");
+} catch (e) {
   console.warn(
-    "⚠️  WARNING: PRIVATE_KEY environment variable not found. Please set it in your .env file for network deployments."
+    "⚠️  WARNING: PRIVATE_KEY not set in Hardhat vars. Run: npx hardhat vars set PRIVATE_KEY"
   );
 }
 
@@ -16,23 +17,35 @@ const config: HardhatUserConfig = {
   solidity: "0.8.28",
   resolc: {
     compilerSource: "npm",
-    settings: {},
+    settings: {
+      optimizer: {
+        enabled: true,
+        parameters: "z", // Size optimization
+        fallbackOz: true,
+        runs: 200,
+      },
+    },
   },
   networks: {
     hardhat: {
-      // polkavm: true,
+      polkavm: true,
+      // Uncomment to fork Polkadot Hub TestNet for local testing
       // forking: {
       //   url: "https://testnet-passet-hub-eth-rpc.polkadot.io"
       // },
-      // adapterConfig: {
-      //   adapterBinaryPath: "./bin/eth-rpc",
-      //   dev: true,
-      // },
     },
     localhost: {
+      polkavm: true,
       url: "http://127.0.0.1:8545/",
     },
-    passetHubTestnet: {
+    // Polkadot Hub TestNet (Paseo Asset Hub)
+    passetHub: {
+      polkavm: true,
+      url: "https://testnet-passet-hub-eth-rpc.polkadot.io",
+      accounts: privateKey ? [privateKey] : [],
+    },
+    // Alternative name for the same network
+    polkadotHubTestnet: {
       polkavm: true,
       url: "https://testnet-passet-hub-eth-rpc.polkadot.io",
       accounts: privateKey ? [privateKey] : [],

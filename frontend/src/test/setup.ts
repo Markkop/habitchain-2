@@ -46,11 +46,23 @@ vi.mock('wagmi', async (importOriginal) => {
   };
 });
 
-// Mock generated contract addresses
+// Mock generated contract addresses and hooks
 vi.mock('../generated', () => ({
-  myTokenModuleMyTokenAddress: {
+  habitTrackerAddress: {
     420420422: '0x1234567890123456789012345678901234567890',
   },
+  habitTrackerAbi: [],
+  useReadHabitTrackerGetUserState: vi.fn(() => ({
+    data: null,
+    refetch: vi.fn(),
+  })),
+  useReadHabitTrackerGetActiveHabits: vi.fn(() => ({
+    data: null,
+    refetch: vi.fn(),
+  })),
+  useReadHabitTrackerEpochNow: vi.fn(() => ({
+    data: null,
+  })),
 }));
 
 // Mock components to avoid complex integration testing
@@ -70,6 +82,6 @@ vi.mock('../components/exportPrivateKey', () => ({
   ExportPrivateKey: () => createElement('div', { 'data-testid': 'export-private-key' }, 'Export Private Key Component'),
 }));
 
-vi.mock('../components/ContractData', () => ({
-  ContractData: () => createElement('div', { 'data-testid': 'contract-data' }, 'Contract Data Component'),
+vi.mock('../components/HabitTracker', () => ({
+  HabitTracker: () => createElement('div', { 'data-testid': 'habit-tracker' }, 'Habit Tracker Component'),
 }));

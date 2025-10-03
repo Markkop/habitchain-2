@@ -9,7 +9,7 @@ export default defineConfig({
       project: "../contracts",
       deployments: {
         HabitTracker: {
-          420420422: "0x0000000000000000000000000000000000000000", // Update after deployment
+          420420422: "0x193521C8934bCF3473453AF4321911E7A89E0E12",
         },
       },
     }),

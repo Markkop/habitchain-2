@@ -10,8 +10,7 @@ import { SendTransaction } from "./components/sendTransaction";
 import { Balance } from "./components/getBalance";
 import { SwitchChain } from "./components/switchNetwork";
 import { ExportPrivateKey } from "./components/exportPrivateKey";
-import { ContractData } from "./components/ContractData";
-import { myTokenAddress } from "./generated";
+import { HabitTracker } from "./components/HabitTracker";
 import { passetHub, kusamaAssetHub, westend } from "./wagmi-config";
 import { useState, useEffect } from "react";
 
@@ -98,12 +97,6 @@ function App() {
     };
   }, [web3Auth, connectLoading]);
 
-
-  const contractAddress =
-    myTokenAddress[
-      passetHub.id as keyof typeof myTokenAddress
-    ];
-
   // Faucet URLs for different networks
   const getFaucetUrl = (chainId: number, address: string) => {
     const faucetUrls = {
@@ -177,30 +170,14 @@ function App() {
       </div>
       <Balance />
 
-      {/* <div className="showcase-message">
-        <h3>🔄 Send Transactions</h3>
-        <p>Transfer tokens directly through Asset Hub without additional wallet prompts.</p>
+      <div className="showcase-message">
+        <h3>🎯 HabitChain - Your Habit Tracker</h3>
+        <p>
+          Create habits, stake tokens, and build better routines with financial
+          commitment!
+        </p>
       </div>
-      <SendTransaction /> */}
-
-      {contractAddress && (
-        <>
-          <div className="showcase-message">
-            <h3>📋 Smart Contract Interactions</h3>
-            <p>
-              Interact with deployed contracts on Asset Hub - read balances,
-              approve tokens, and execute transactions.
-            </p>
-          </div>
-          <div className="contract-section">
-            <h3>FakeUSDT Contract Interactions</h3>
-            <ContractData
-              contractAddress={contractAddress}
-              userAddresses={address ? [address] : undefined}
-            />
-          </div>
-        </>
-      )}
+      <HabitTracker />
 
       <div className="showcase-message">
         <h3>🌐 Network Switching</h3>
@@ -216,16 +193,6 @@ function App() {
         </p>
       </div>
       <ExportPrivateKey />
-
-      {!contractAddress && (
-        <div className="contract-section">
-          <h3>Contract Not Available</h3>
-          <p>
-            Please deploy the FakeUSDT contract and update the address in
-            generated.ts
-          </p>
-        </div>
-      )}
     </div>
   );
 

@@ -483,7 +483,7 @@ export const habitTrackerAbi = [
  *
  */
 export const habitTrackerAddress = {
-  420420422: '0x0000000000000000000000000000000000000000',
+  420420422: '0x193521C8934bCF3473453AF4321911E7A89E0E12',
 } as const
 
 /**

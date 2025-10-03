@@ -83,8 +83,6 @@ contract HabitTracker {
     error HabitTextTooLong();
     error HabitTextTooShort();
     
-    // ============ Modifiers ============
-    
     modifier onlyHabitOwner(uint32 habitId) {
         if (habits[msg.sender][habitId].owner != msg.sender) revert NotHabitOwner();
         _;
@@ -102,150 +100,38 @@ contract HabitTracker {
         treasury = _treasury;
     }
     
-    // ============ View Functions ============
-    
-    /**
-     * @notice Get current epoch (civil day since Unix epoch)
-     * @return Current epoch as uint64
-     */
     function epochNow() public view returns (uint64) {
         return uint64(block.timestamp / SECONDS_PER_DAY);
     }
     
-    /**
-     * @notice Get user's balance state
-     * @param user Address of the user
-     * @return UserState struct with all balance information
-     */
-    function getUserState(address user) external view returns (UserState memory) {
-        return userStates[user];
-    }
-    
-    /**
-     * @notice Get specific habit details
-     * @param user Address of habit owner
-     * @param habitId ID of the habit
-     * @return Habit struct
-     */
-    function getHabit(address user, uint32 habitId) external view returns (Habit memory) {
-        return habits[user][habitId];
-    }
-    
-    /**
-     * @notice Get daily status for a specific habit
-     * @param user Address of habit owner
-     * @param epoch Day epoch
-     * @param habitId ID of the habit
-     * @return DailyStatus struct
-     */
-    function getDailyStatus(address user, uint64 epoch, uint32 habitId) external view returns (DailyStatus memory) {
-        return dailyStatuses[user][epoch][habitId];
-    }
-    
-    /**
-     * @notice Get all habits for a user (including archived)
-     * @param user Address of the user
-     * @return Array of Habit structs
-     */
-    function getAllHabits(address user) external view returns (Habit[] memory) {
-        uint32 count = userHabitCounters[user];
-        Habit[] memory userHabits = new Habit[](count);
-        
-        uint32 index = 0;
-        for (uint32 i = 1; i <= count; i++) {
-            Habit storage habit = habits[user][i];
-            if (habit.owner != address(0)) {
-                userHabits[index] = habit;
-                index++;
-            }
-        }
-        
-        // Resize array to actual count (exclude empty slots)
-        Habit[] memory result = new Habit[](index);
-        for (uint32 i = 0; i < index; i++) {
-            result[i] = userHabits[i];
-        }
-        
-        return result;
-    }
-    
-    /**
-     * @notice Get only active (non-archived) habits for a user
-     * @param user Address of the user
-     * @return Array of active Habit structs
-     */
-    function getActiveHabits(address user) external view returns (Habit[] memory) {
-        uint32 count = userHabitCounters[user];
-        Habit[] memory activeHabits = new Habit[](userStates[user].activeHabitCount);
-        
-        uint32 index = 0;
-        for (uint32 i = 1; i <= count; i++) {
-            Habit storage habit = habits[user][i];
-            if (habit.owner != address(0) && !habit.archived) {
-                activeHabits[index] = habit;
-                index++;
-            }
-        }
-        
-        return activeHabits;
-    }
-    
-    // ============ Balance Management Functions ============
-    
-    /**
-     * @notice Deposit PAS tokens into the contract for staking
-     */
     function deposit() external payable validAmount(msg.value) {
         userStates[msg.sender].depositBalance += msg.value;
         emit Deposited(msg.sender, msg.value);
     }
     
-    /**
-     * @notice Withdraw available deposit balance
-     * @param amount Amount to withdraw in wei
-     */
     function withdraw(uint256 amount) external validAmount(amount) {
         UserState storage state = userStates[msg.sender];
-        
         if (state.depositBalance < amount) revert InsufficientBalance();
-        
         state.depositBalance -= amount;
-        
         (bool success, ) = msg.sender.call{value: amount}("");
         if (!success) revert TransferFailed();
-        
         emit Withdrawn(msg.sender, amount);
     }
     
-    /**
-     * @notice Claim won rewards from claimable balance
-     * @param amount Amount to claim in wei
-     */
     function claim(uint256 amount) external validAmount(amount) {
         UserState storage state = userStates[msg.sender];
-        
         if (state.claimableBalance < amount) revert InsufficientBalance();
-        
         state.claimableBalance -= amount;
-        
         (bool success, ) = msg.sender.call{value: amount}("");
         if (!success) revert TransferFailed();
-        
         emit Claimed(msg.sender, amount);
     }
     
-    /**
-     * @notice Move funds from claimable to deposit balance without external transfer
-     * @param amount Amount to redeposit in wei
-     */
     function redepositFromClaimable(uint256 amount) external validAmount(amount) {
         UserState storage state = userStates[msg.sender];
-        
         if (state.claimableBalance < amount) revert InsufficientBalance();
-        
         state.claimableBalance -= amount;
         state.depositBalance += amount;
-        
         emit RedepositedFromClaimable(msg.sender, amount);
     }
     
@@ -414,26 +300,6 @@ contract HabitTracker {
                 settled++;
             }
         }
-    }
-    
-    // ============ Emergency Functions ============
-    
-    /**
-     * @notice Get contract's total PAS balance
-     * @return Balance in wei
-     */
-    function getContractBalance() external view returns (uint256) {
-        return address(this).balance;
-    }
-    
-    /**
-     * @notice Calculate total user funds in contract (for verification)
-     * @param user Address to check
-     * @return Total of deposit + blocked + claimable
-     */
-    function getTotalUserFunds(address user) external view returns (uint256) {
-        UserState storage state = userStates[user];
-        return state.depositBalance + state.blockedBalance + state.claimableBalance;
     }
 }
 

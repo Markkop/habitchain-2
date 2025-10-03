@@ -98,9 +98,7 @@ describe('App Component', () => {
 
       expect(screen.getByText(/Interact directly with Polkadot Asset Hub - no MetaMask required/)).toBeInTheDocument();
       expect(screen.getByText(/Check Your Balance/)).toBeInTheDocument();
-      // Send Transactions section is commented out in the component
-      // expect(screen.getByText(/Send Transactions/)).toBeInTheDocument();
-      expect(screen.getByText(/Smart Contract Interactions/)).toBeInTheDocument();
+      expect(screen.getByText(/HabitChain - Your Habit Tracker/)).toBeInTheDocument();
       expect(screen.getByText(/Network Switching/)).toBeInTheDocument();
       expect(screen.getByText(/Private Key Access/)).toBeInTheDocument();
     });
@@ -132,9 +130,7 @@ describe('App Component', () => {
 
       // Check that all sections are present
       expect(screen.getByTestId('balance')).toBeInTheDocument();
-      // Send transaction is commented out in the component
-      // expect(screen.getByTestId('send-transaction')).toBeInTheDocument();
-      expect(screen.getByTestId('contract-data')).toBeInTheDocument();
+      expect(screen.getByTestId('habit-tracker')).toBeInTheDocument();
       expect(screen.getByTestId('switch-chain')).toBeInTheDocument();
       expect(screen.getByTestId('export-private-key')).toBeInTheDocument();
     });

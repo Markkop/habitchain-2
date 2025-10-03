@@ -5,9 +5,10 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules"
 
 const HabitTrackerModule = buildModule("HabitTrackerModule", (m) => {
-    // Treasury address - should be set to a proper address for production
-    // For testing, you can use the deployer's address or a specific treasury address
-    const treasuryAddress = m.getParameter("treasuryAddress", "0x0000000000000000000000000000000000000000")
+    // Treasury address - defaults to deployer address for testing
+    // For production, pass a proper treasury address via parameters
+    const deployer = m.getAccount(0)
+    const treasuryAddress = m.getParameter("treasuryAddress", deployer)
 
     const habitTracker = m.contract("HabitTracker", [treasuryAddress])
 
