@@ -27,8 +27,7 @@ export function HabitTracker() {
   // Read user state using the public mapping getter
   const { data: userStateRaw, refetch: refetchUserState, error: userStateError, isLoading: userStateLoading } =
     useReadHabitTrackerUserStates({
-      address: contractAddress,
-      chainId: chainId,
+      chainId: chainId as keyof typeof habitTrackerAddress,
       args: address ? [address] : undefined,
       query: {
         enabled: !!address && !!contractAddress,
@@ -48,8 +47,7 @@ export function HabitTracker() {
 
   // Read current epoch
   const { data: currentEpoch } = useReadHabitTrackerEpochNow({
-    address: contractAddress,
-    chainId: chainId,
+    chainId: chainId as keyof typeof habitTrackerAddress,
     query: {
       enabled: !!contractAddress,
     },
@@ -134,7 +132,7 @@ export function HabitTracker() {
     });
   }, [address, chainId, contractAddress, userStateLoading, userStateError, userState]);
 
-  if (!contractAddress || contractAddress === "0x0000000000000000000000000000000000000000") {
+  if (!contractAddress) {
     return (
       <div className="card">
         <h2>⚠️ HabitTracker Contract Not Deployed</h2>
