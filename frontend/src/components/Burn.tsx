@@ -1,4 +1,4 @@
-import { fakeUsdtModuleFakeUsdtAbi } from "../generated";
+import { myTokenAbi } from "../generated";
 import {
   useWriteContract,
   useAccount,
@@ -166,7 +166,7 @@ export function Burn(params: {
             writeContract({
               chainId,
               address: params.contractAddress,
-              abi: fakeUsdtModuleFakeUsdtAbi,
+              abi: myTokenAbi,
               functionName: "burn",
               args: [value],
               // Hint wagmi/viem for legacy by setting gasPrice

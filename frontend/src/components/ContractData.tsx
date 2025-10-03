@@ -1,4 +1,4 @@
-import { myTokenModuleMyTokenConfig } from "../generated";
+import { myTokenConfig } from "../generated";
 import { useReadContracts } from "wagmi";
 import { Mint } from "./Mint";
 import { Burn } from "./Burn";
@@ -12,7 +12,7 @@ export function ContractData(params: {
 
   const myTokenContract = {
     address: params.contractAddress,
-    abi: myTokenModuleMyTokenConfig.abi as Abi,
+    abi: myTokenConfig.abi as Abi,
   } as const;
 
   const contractData = useReadContracts({

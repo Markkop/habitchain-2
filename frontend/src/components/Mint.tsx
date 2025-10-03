@@ -1,4 +1,4 @@
-import { myTokenModuleMyTokenAbi } from "../generated";
+import { myTokenAbi } from "../generated";
 import {
   useWriteContract,
   useAccount,
@@ -161,7 +161,7 @@ export function Mint(params: {
             writeContract({
               chainId,
               address: params.contractAddress,
-              abi: myTokenModuleMyTokenAbi,
+              abi: myTokenAbi,
               functionName: "mint",
               args: [address, value],
               // Hint wagmi/viem for legacy by setting gasPrice

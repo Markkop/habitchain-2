@@ -11,7 +11,7 @@ import { Balance } from "./components/getBalance";
 import { SwitchChain } from "./components/switchNetwork";
 import { ExportPrivateKey } from "./components/exportPrivateKey";
 import { ContractData } from "./components/ContractData";
-import { myTokenModuleMyTokenAddress } from "./generated";
+import { myTokenAddress } from "./generated";
 import { passetHub, kusamaAssetHub, westend } from "./wagmi-config";
 import { useState, useEffect } from "react";
 
@@ -100,8 +100,8 @@ function App() {
 
 
   const contractAddress =
-    myTokenModuleMyTokenAddress[
-      passetHub.id as keyof typeof myTokenModuleMyTokenAddress
+    myTokenAddress[
+      passetHub.id as keyof typeof myTokenAddress
     ];
 
   // Faucet URLs for different networks
