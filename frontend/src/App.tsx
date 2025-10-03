@@ -11,6 +11,7 @@ import { Balance } from "./components/getBalance";
 import { SwitchChain } from "./components/switchNetwork";
 import { ExportPrivateKey } from "./components/exportPrivateKey";
 import { HabitTracker } from "./components/HabitTracker";
+import { SetupTestnet } from "./components/setupTestnet";
 import { passetHub, kusamaAssetHub, westend } from "./wagmi-config";
 import { useState, useEffect } from "react";
 
@@ -220,7 +221,12 @@ function App() {
         <button
           onClick={() => {
             // Since the button only appears when ready, we should always be able to connect
-            if (web3Auth && web3Auth.status === "ready" && !connectLoading && !isConnected) {
+            if (
+              web3Auth &&
+              web3Auth.status === "ready" &&
+              !connectLoading &&
+              !isConnected
+            ) {
               connect();
             }
           }}
@@ -231,21 +237,39 @@ function App() {
         </button>
       )}
 
+      {/* Setup and faucet buttons - always visible */}
+      <SetupTestnet />
+
+      <a
+        href="https://faucet.polkadot.io/?parachain=1111"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card faucet-link-button"
+      >
+        Get Testnet Tokens from Faucet
+      </a>
+
       {/* Provider failed to initialize */}
-      {!providerLoading && !providerReady && providerError && !connectLoading && (
-        <div className="error">
-          Web3Auth provider failed to initialize after 30 seconds. Please check
-          your internet connection and reload the page.
-        </div>
-      )}
+      {!providerLoading &&
+        !providerReady &&
+        providerError &&
+        !connectLoading && (
+          <div className="error">
+            Web3Auth provider failed to initialize after 30 seconds. Please
+            check your internet connection and reload the page.
+          </div>
+        )}
 
       {/* Provider ready but can't connect (network issues) */}
-      {!providerLoading && !providerReady && !providerError && !connectLoading && (
-        <div className="error">
-          Web3Auth provider is not ready for login. Please wait or reload the
-          page.
-        </div>
-      )}
+      {!providerLoading &&
+        !providerReady &&
+        !providerError &&
+        !connectLoading && (
+          <div className="error">
+            Web3Auth provider is not ready for login. Please wait or reload the
+            page.
+          </div>
+        )}
 
       {connectLoading && <div className="loading">Connecting...</div>}
       {connectError && <div className="error">{connectError.message}</div>}

@@ -25,7 +25,6 @@ export const habitTrackerAbi = [
   { type: 'error', inputs: [], name: 'HabitAlreadyArchived' },
   { type: 'error', inputs: [], name: 'HabitNotFound' },
   { type: 'error', inputs: [], name: 'HabitTextTooLong' },
-  { type: 'error', inputs: [], name: 'HabitTextTooShort' },
   { type: 'error', inputs: [], name: 'InsufficientBalance' },
   { type: 'error', inputs: [], name: 'InvalidAmount' },
   { type: 'error', inputs: [], name: 'InvalidBatchSize' },
@@ -122,7 +121,7 @@ export const habitTrackerAbi = [
         type: 'uint32',
         indexed: true,
       },
-      { name: 'text', internalType: 'string', type: 'string', indexed: false },
+      { name: 'text', internalType: 'bytes32', type: 'bytes32', indexed: false },
     ],
     name: 'HabitCreated',
   },
@@ -229,7 +228,7 @@ export const habitTrackerAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'text', internalType: 'string', type: 'string' }],
+    inputs: [{ name: 'text', internalType: 'bytes32', type: 'bytes32' }],
     name: 'createHabit',
     outputs: [{ name: '', internalType: 'uint32', type: 'uint32' }],
     stateMutability: 'nonpayable',
@@ -243,9 +242,7 @@ export const habitTrackerAbi = [
     ],
     name: 'dailyStatuses',
     outputs: [
-      { name: 'funded', internalType: 'bool', type: 'bool' },
-      { name: 'checked', internalType: 'bool', type: 'bool' },
-      { name: 'settled', internalType: 'bool', type: 'bool' },
+      { name: 'flags', internalType: 'uint8', type: 'uint8' },
     ],
     stateMutability: 'view',
   },
@@ -265,125 +262,25 @@ export const habitTrackerAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: 'user', internalType: 'address', type: 'address' }],
-    name: 'getActiveHabits',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct HabitTracker.Habit[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'id', internalType: 'uint32', type: 'uint32' },
-          { name: 'owner', internalType: 'address', type: 'address' },
-          { name: 'text', internalType: 'string', type: 'string' },
-          { name: 'createdAtEpoch', internalType: 'uint64', type: 'uint64' },
-          { name: 'archived', internalType: 'bool', type: 'bool' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'user', internalType: 'address', type: 'address' }],
-    name: 'getAllHabits',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct HabitTracker.Habit[]',
-        type: 'tuple[]',
-        components: [
-          { name: 'id', internalType: 'uint32', type: 'uint32' },
-          { name: 'owner', internalType: 'address', type: 'address' },
-          { name: 'text', internalType: 'string', type: 'string' },
-          { name: 'createdAtEpoch', internalType: 'uint64', type: 'uint64' },
-          { name: 'archived', internalType: 'bool', type: 'bool' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
-    name: 'getContractBalance',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
       { name: 'epoch', internalType: 'uint64', type: 'uint64' },
-      { name: 'habitId', internalType: 'uint32', type: 'uint32' },
+      { name: 'maxCount', internalType: 'uint32', type: 'uint32' },
     ],
-    name: 'getDailyStatus',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct HabitTracker.DailyStatus',
-        type: 'tuple',
-        components: [
-          { name: 'funded', internalType: 'bool', type: 'bool' },
-          { name: 'checked', internalType: 'bool', type: 'bool' },
-          { name: 'settled', internalType: 'bool', type: 'bool' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
+    name: 'forceSettleDay',
+    outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
     inputs: [
       { name: 'user', internalType: 'address', type: 'address' },
-      { name: 'habitId', internalType: 'uint32', type: 'uint32' },
+      { name: 'startEpoch', internalType: 'uint64', type: 'uint64' },
+      { name: 'maxSettlements', internalType: 'uint32', type: 'uint32' },
     ],
-    name: 'getHabit',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct HabitTracker.Habit',
-        type: 'tuple',
-        components: [
-          { name: 'id', internalType: 'uint32', type: 'uint32' },
-          { name: 'owner', internalType: 'address', type: 'address' },
-          { name: 'text', internalType: 'string', type: 'string' },
-          { name: 'createdAtEpoch', internalType: 'uint64', type: 'uint64' },
-          { name: 'archived', internalType: 'bool', type: 'bool' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'user', internalType: 'address', type: 'address' }],
-    name: 'getTotalUserFunds',
-    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: 'user', internalType: 'address', type: 'address' }],
-    name: 'getUserState',
-    outputs: [
-      {
-        name: '',
-        internalType: 'struct HabitTracker.UserState',
-        type: 'tuple',
-        components: [
-          { name: 'depositBalance', internalType: 'uint256', type: 'uint256' },
-          { name: 'blockedBalance', internalType: 'uint256', type: 'uint256' },
-          {
-            name: 'claimableBalance',
-            internalType: 'uint256',
-            type: 'uint256',
-          },
-          { name: 'activeHabitCount', internalType: 'uint32', type: 'uint32' },
-        ],
-      },
-    ],
-    stateMutability: 'view',
+    name: 'forceSettleAllEpochs',
+    outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -395,7 +292,7 @@ export const habitTrackerAbi = [
     outputs: [
       { name: 'id', internalType: 'uint32', type: 'uint32' },
       { name: 'owner', internalType: 'address', type: 'address' },
-      { name: 'text', internalType: 'string', type: 'string' },
+      { name: 'text', internalType: 'bytes32', type: 'bytes32' },
       { name: 'createdAtEpoch', internalType: 'uint64', type: 'uint64' },
       { name: 'archived', internalType: 'bool', type: 'bool' },
     ],
@@ -483,7 +380,7 @@ export const habitTrackerAbi = [
  *
  */
 export const habitTrackerAddress = {
-  420420422: '0x193521C8934bCF3473453AF4321911E7A89E0E12',
+  420420422: '0xDA33f6936dcb89D38F2FEc3DC4a6aa1C2648599A',
 } as const
 
 /**
@@ -515,10 +412,10 @@ export const useReadHabitTracker = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerStakePerDay =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'STAKE_PER_DAY',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'STAKE_PER_DAY',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"dailyStatuses"`
@@ -527,10 +424,10 @@ export const useReadHabitTrackerStakePerDay =
  */
 export const useReadHabitTrackerDailyStatuses =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'dailyStatuses',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'dailyStatuses',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"epochNow"`
@@ -550,10 +447,10 @@ export const useReadHabitTrackerEpochNow = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerGetActiveHabits =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'getActiveHabits',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'getActiveHabits',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"getAllHabits"`
@@ -562,10 +459,10 @@ export const useReadHabitTrackerGetActiveHabits =
  */
 export const useReadHabitTrackerGetAllHabits =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'getAllHabits',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'getAllHabits',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"getContractBalance"`
@@ -574,10 +471,10 @@ export const useReadHabitTrackerGetAllHabits =
  */
 export const useReadHabitTrackerGetContractBalance =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'getContractBalance',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'getContractBalance',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"getDailyStatus"`
@@ -586,10 +483,10 @@ export const useReadHabitTrackerGetContractBalance =
  */
 export const useReadHabitTrackerGetDailyStatus =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'getDailyStatus',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'getDailyStatus',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"getHabit"`
@@ -609,10 +506,10 @@ export const useReadHabitTrackerGetHabit = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerGetTotalUserFunds =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'getTotalUserFunds',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'getTotalUserFunds',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"getUserState"`
@@ -621,10 +518,10 @@ export const useReadHabitTrackerGetTotalUserFunds =
  */
 export const useReadHabitTrackerGetUserState =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'getUserState',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'getUserState',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"habits"`
@@ -644,10 +541,10 @@ export const useReadHabitTrackerHabits = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerTotalTreasuryReceived =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'totalTreasuryReceived',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'totalTreasuryReceived',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"treasury"`
@@ -667,10 +564,10 @@ export const useReadHabitTrackerTreasury = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerUserHabitCounters =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'userHabitCounters',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'userHabitCounters',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"userStates"`
@@ -679,10 +576,10 @@ export const useReadHabitTrackerUserHabitCounters =
  */
 export const useReadHabitTrackerUserStates =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'userStates',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'userStates',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -701,10 +598,10 @@ export const useWriteHabitTracker = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitTrackerArchiveHabit =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'archiveHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'archiveHabit',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"checkIn"`
@@ -737,10 +634,10 @@ export const useWriteHabitTrackerClaim = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitTrackerCreateHabit =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'createHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'createHabit',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"deposit"`
@@ -762,10 +659,10 @@ export const useWriteHabitTrackerDeposit = /*#__PURE__*/ createUseWriteContract(
  */
 export const useWriteHabitTrackerPrepareDay =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'prepareDay',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'prepareDay',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"redepositFromClaimable"`
@@ -774,10 +671,10 @@ export const useWriteHabitTrackerPrepareDay =
  */
 export const useWriteHabitTrackerRedepositFromClaimable =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'redepositFromClaimable',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'redepositFromClaimable',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"settle"`
@@ -797,10 +694,10 @@ export const useWriteHabitTrackerSettle = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitTrackerSettleAll =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'settleAll',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'settleAll',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"withdraw"`
@@ -809,10 +706,10 @@ export const useWriteHabitTrackerSettleAll =
  */
 export const useWriteHabitTrackerWithdraw =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'withdraw',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'withdraw',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -831,10 +728,10 @@ export const useSimulateHabitTracker = /*#__PURE__*/ createUseSimulateContract({
  */
 export const useSimulateHabitTrackerArchiveHabit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'archiveHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'archiveHabit',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"checkIn"`
@@ -843,10 +740,10 @@ export const useSimulateHabitTrackerArchiveHabit =
  */
 export const useSimulateHabitTrackerCheckIn =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'checkIn',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'checkIn',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"claim"`
@@ -855,10 +752,10 @@ export const useSimulateHabitTrackerCheckIn =
  */
 export const useSimulateHabitTrackerClaim =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'claim',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'claim',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"createHabit"`
@@ -867,10 +764,10 @@ export const useSimulateHabitTrackerClaim =
  */
 export const useSimulateHabitTrackerCreateHabit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'createHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'createHabit',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"deposit"`
@@ -879,10 +776,10 @@ export const useSimulateHabitTrackerCreateHabit =
  */
 export const useSimulateHabitTrackerDeposit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'deposit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'deposit',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"prepareDay"`
@@ -891,10 +788,10 @@ export const useSimulateHabitTrackerDeposit =
  */
 export const useSimulateHabitTrackerPrepareDay =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'prepareDay',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'prepareDay',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"redepositFromClaimable"`
@@ -903,10 +800,10 @@ export const useSimulateHabitTrackerPrepareDay =
  */
 export const useSimulateHabitTrackerRedepositFromClaimable =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'redepositFromClaimable',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'redepositFromClaimable',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"settle"`
@@ -915,10 +812,10 @@ export const useSimulateHabitTrackerRedepositFromClaimable =
  */
 export const useSimulateHabitTrackerSettle =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'settle',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'settle',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"settleAll"`
@@ -927,10 +824,10 @@ export const useSimulateHabitTrackerSettle =
  */
 export const useSimulateHabitTrackerSettleAll =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'settleAll',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'settleAll',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"withdraw"`
@@ -939,10 +836,10 @@ export const useSimulateHabitTrackerSettleAll =
  */
 export const useSimulateHabitTrackerWithdraw =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'withdraw',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'withdraw',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -951,9 +848,9 @@ export const useSimulateHabitTrackerWithdraw =
  */
 export const useWatchHabitTrackerEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"CheckedIn"`
@@ -962,10 +859,10 @@ export const useWatchHabitTrackerEvent =
  */
 export const useWatchHabitTrackerCheckedInEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'CheckedIn',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'CheckedIn',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"Claimed"`
@@ -974,10 +871,10 @@ export const useWatchHabitTrackerCheckedInEvent =
  */
 export const useWatchHabitTrackerClaimedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'Claimed',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'Claimed',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"DayPrepared"`
@@ -986,10 +883,10 @@ export const useWatchHabitTrackerClaimedEvent =
  */
 export const useWatchHabitTrackerDayPreparedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'DayPrepared',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'DayPrepared',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"Deposited"`
@@ -998,10 +895,10 @@ export const useWatchHabitTrackerDayPreparedEvent =
  */
 export const useWatchHabitTrackerDepositedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'Deposited',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'Deposited',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"HabitArchived"`
@@ -1010,10 +907,10 @@ export const useWatchHabitTrackerDepositedEvent =
  */
 export const useWatchHabitTrackerHabitArchivedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'HabitArchived',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'HabitArchived',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"HabitCreated"`
@@ -1022,10 +919,10 @@ export const useWatchHabitTrackerHabitArchivedEvent =
  */
 export const useWatchHabitTrackerHabitCreatedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'HabitCreated',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'HabitCreated',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"RedepositedFromClaimable"`
@@ -1034,10 +931,10 @@ export const useWatchHabitTrackerHabitCreatedEvent =
  */
 export const useWatchHabitTrackerRedepositedFromClaimableEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'RedepositedFromClaimable',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'RedepositedFromClaimable',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"SettledFail"`
@@ -1046,10 +943,10 @@ export const useWatchHabitTrackerRedepositedFromClaimableEvent =
  */
 export const useWatchHabitTrackerSettledFailEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'SettledFail',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'SettledFail',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"SettledSuccess"`
@@ -1058,10 +955,10 @@ export const useWatchHabitTrackerSettledFailEvent =
  */
 export const useWatchHabitTrackerSettledSuccessEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'SettledSuccess',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'SettledSuccess',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"Withdrawn"`
@@ -1070,7 +967,7 @@ export const useWatchHabitTrackerSettledSuccessEvent =
  */
 export const useWatchHabitTrackerWithdrawnEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'Withdrawn',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'Withdrawn',
+})
