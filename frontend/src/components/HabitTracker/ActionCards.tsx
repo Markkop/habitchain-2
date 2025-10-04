@@ -425,6 +425,13 @@ export function ActionCards({
             onClick={handlePrepareDay}
             disabled={isPrepareDayPending || !isConnected || allHabitsFunded}
             className="action-card-button"
+            title={
+              !isConnected
+                ? "Connect wallet to fund habits"
+                : allHabitsFunded
+                  ? "All habits are already funded for today"
+                  : `Lock funds for today (Epoch: ${currentEpoch?.toString() || "?"})`
+            }
           >
             {isPrepareDayPending ? (
               <>
@@ -440,9 +447,11 @@ export function ActionCards({
         <div
           className="action-card"
           title={
-            !hasAnyFundedHabit
-              ? "No funded habits to settle"
-              : `Settle yesterday (Epoch: ${currentEpoch ? Number(currentEpoch) - 1 : "?"})`
+            !isConnected
+              ? "Connect wallet to settle"
+              : !hasAnyFundedHabit
+                ? "No funded habits to settle"
+                : `Settle yesterday (Epoch: ${currentEpoch ? Number(currentEpoch) - 1 : "?"})`
           }
         >
           <div className="action-card-label">SETTLE YESTERDAY</div>
@@ -465,9 +474,11 @@ export function ActionCards({
         <div
           className="action-card"
           title={
-            !hasAnyFundedHabit
-              ? "No funded habits to settle"
-              : "For testing only - bypasses validation"
+            !isConnected
+              ? "Connect wallet to settle"
+              : !hasAnyFundedHabit
+                ? "No funded habits to settle"
+                : "For testing only - bypasses validation"
           }
         >
           <div className="action-card-label">FORCE SETTLE</div>

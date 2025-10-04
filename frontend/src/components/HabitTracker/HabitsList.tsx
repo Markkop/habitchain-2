@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { logTransaction, logTxStatus } from "../../utils/logger";
 import { textToBytes32 } from "../../utils/habitHelpers";
+import { setupPolkadotTestnet } from "../../utils/networkSetup";
 import type { Habit, DailyStatus } from "../../types/habit";
 import { HabitCard } from "./HabitCard";
 
@@ -86,9 +87,9 @@ export function HabitsList({
     }
   }, [isCheckInSuccess, checkInToastId, onSuccess]);
 
-  const handleCreateHabit = () => {
+  const handleCreateHabit = async () => {
     if (!isConnected) {
-      onConnect();
+      await setupPolkadotTestnet();
       return;
     }
     if (!habitText) return;
@@ -170,27 +171,32 @@ export function HabitsList({
   return (
     <div className="section-card">
       <h3>📋 Your Habits</h3>
-      {!isConnected ? (
-        <p className="hint-text">Connect wallet to view your habits</p>
-      ) : (
-        <div className="habits-list">
-          {/* Creation card - always shown first */}
-          <HabitCard
-            isCreationMode
-            creationValue={habitText}
-            onCreationChange={setHabitText}
-            buttons={[
-              {
-                label: isCreateHabitPending ? "Pending..." : "Create",
-                onClick: handleCreateHabit,
-                disabled: isCreateHabitPending || habitText.length < 3,
-                variant: "primary",
-              },
-            ]}
-          />
+      <div className="habits-list">
+        {/* Creation card - always shown first */}
+        <HabitCard
+          isCreationMode
+          creationValue={habitText}
+          onCreationChange={setHabitText}
+          buttons={[
+            {
+              label: isConnected
+                ? isCreateHabitPending
+                  ? "Pending..."
+                  : "Create"
+                : "Connect Wallet",
+              onClick: handleCreateHabit,
+              disabled:
+                isCreateHabitPending || (isConnected && habitText.length < 3),
+              variant: "primary",
+            },
+          ]}
+        />
 
-          {/* Existing habits */}
-          {activeHabits.map((habit) => {
+        {/* Existing habits - only show when connected */}
+        {!isConnected ? (
+          <p className="hint-text">Connect wallet to view your habits</p>
+        ) : (
+          activeHabits.map((habit) => {
             const status = habitStatuses[habit.id];
             const hasStatus = !!status;
             const canCheckIn = hasStatus && status.funded && !status.checked;
@@ -198,9 +204,9 @@ export function HabitsList({
 
             const buttons = [];
 
-            // Achieve button (always shown, but disabled if not checked in)
+            // Archive button (always shown, but disabled if not checked in)
             buttons.push({
-              label: "Achieve",
+              label: "Archive",
               onClick: () => handleAchieve(habit.id),
               disabled: !isCheckedIn,
               variant: "warning" as const,
@@ -224,9 +230,9 @@ export function HabitsList({
                 buttons={buttons}
               />
             );
-          })}
-        </div>
-      )}
+          })
+        )}
+      </div>
     </div>
   );
 }
