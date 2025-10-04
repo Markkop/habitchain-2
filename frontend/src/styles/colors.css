@@ -56,9 +56,9 @@
   --warning-bg: #ffb8001a;
   --warning-border: #ffb8004d;
 
-  --info-color: var(--brand-purple);
-  --info-bg: #6d0f9b1a;
-  --info-border: #6d0f9b4d;
+  --info-color: var(--brand-pink);
+  --info-bg: #fc298d1a;
+  --info-border: #fc298d4d;
 
   /* UI Elements */
   --radius: 8px;

@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { themePresets, ThemePreset } from "../config/themePresets";
 import { X, Palette, RotateCcw, Copy, Check } from "lucide-react";
 
-export function ThemeCustomizer() {
+interface ThemeCustomizerProps {
+  inline?: boolean;
+}
+
+export function ThemeCustomizer({ inline }: ThemeCustomizerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPreset, setCurrentPreset] = useState<ThemePreset>(
     themePresets[0]
