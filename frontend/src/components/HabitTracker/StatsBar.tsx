@@ -10,6 +10,7 @@ import { Clipboard, X, Plus, ArrowUp, Loader2, Check } from "lucide-react";
 import { logTransaction, logTxStatus } from "../../utils/logger";
 import { setupPolkadotTestnet } from "../../utils/networkSetup";
 import type { UserState } from "../../types/habit";
+import { Tooltip } from "../Tooltip";
 
 interface StatsBarProps {
   isConnected: boolean;
@@ -206,13 +207,12 @@ export function StatsBar({
         <div className="available-card-wrapper">
           <div className="stat-card available-card">
             <div className="stat-label-with-actions">
-              <span className="stat-label">Available</span>
+              <span className="stat-label">DEPOSIT</span>
               <div className="stat-inline-actions">
                 {!showDepositInput && (
                   <span
                     className="icon-small deposit-icon"
                     onClick={handleDepositClick}
-                    title={isConnected ? "Deposit" : "Connect wallet to deposit"}
                   >
                     <Plus size={12} />
                   </span>
@@ -221,7 +221,6 @@ export function StatsBar({
                   <span
                     className={`icon-small withdraw-icon ${isWithdrawPending ? "spinning" : ""}`}
                     onClick={isWithdrawPending ? undefined : handleWithdraw}
-                    title="Withdraw all"
                     style={{
                       cursor: isWithdrawPending ? "not-allowed" : "pointer",
                       opacity: isWithdrawPending ? 0.6 : 1,
@@ -265,7 +264,6 @@ export function StatsBar({
                   className={`icon-button add-button ${isDepositPending ? "spinning" : ""}`}
                   onClick={handleDeposit}
                   disabled={isDepositPending || !depositAmount}
-                  title="Confirm deposit (Enter)"
                 >
                   <span>
                     {isDepositPending ? (
@@ -282,7 +280,6 @@ export function StatsBar({
                     setDepositAmount("");
                   }}
                   disabled={isDepositPending}
-                  title="Cancel (Esc)"
                 >
                   <X size={14} />
                 </button>
@@ -298,7 +295,6 @@ export function StatsBar({
                   <span
                     className="success-check"
                     onClick={() => setShowSuccessCheck(false)}
-                    title="Click to dismiss"
                   >
                     <Check size={16} />
                   </span>
@@ -324,7 +320,6 @@ export function StatsBar({
                       undefined
                     );
                   }}
-                  title="Copy error to clipboard"
                 >
                   <Clipboard size={10} />
                 </button>
@@ -334,7 +329,6 @@ export function StatsBar({
                     setDepositError(null);
                     setWithdrawError(null);
                   }}
-                  title="Close error message"
                 >
                   <X size={12} />
                 </button>
@@ -344,7 +338,9 @@ export function StatsBar({
           )}
         </div>
         <div className="stat-card">
-          <div className="stat-label">Staked</div>
+          <div className="stat-label">
+            Staked <Tooltip text={<>"PAS" at stake yield extra rewards</>} />
+          </div>
           <div className="stat-value">
             {isConnected && userState
               ? `${formatEther(userState.blockedBalance)} PAS`
@@ -352,7 +348,18 @@ export function StatsBar({
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Rewards</div>
+          <div className="stat-label">
+            Rewards{" "}
+            <Tooltip
+              text={
+                <>
+                  Your "PAS" back + yield rewards.
+                  <br />
+                  Keeps yield rewards while not claimed
+                </>
+              }
+            />
+          </div>
           <div className="stat-value">
             {isConnected && userState
               ? `${formatEther(userState.claimableBalance)} PAS`

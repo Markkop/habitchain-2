@@ -91,7 +91,7 @@ Each component is self-contained with:
 **StatsBar.tsx**
 
 - Displays user stats horizontally
-- Shows: Available, Staked, Rewards, Habits count
+- Shows: DEPOSIT, Staked, Rewards, Habits count
 - Handles loading and error states
 
 **DepositSection.tsx**

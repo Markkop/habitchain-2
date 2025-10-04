@@ -8,6 +8,7 @@ import {
 import { logTransaction, logTxStatus } from "../../utils/logger";
 import { formatEther } from "viem";
 import type { DailyStatus } from "../../types/habit";
+import { Tooltip } from "../Tooltip";
 
 interface ActionCardsProps {
   isConnected: boolean;
@@ -412,26 +413,17 @@ export function ActionCards({
     <>
       <div className="action-cards-container">
         {/* Prepare Day Card */}
-        <div
-          className="action-card"
-          title={
-            allHabitsFunded
-              ? "All habits are already funded for today"
-              : `Lock funds for today (Epoch: ${currentEpoch?.toString() || "?"})`
-          }
-        >
-          <div className="action-card-label">PREPARE DAY</div>
+        <div className="action-card">
+          <div className="action-card-label">
+            PREPARE DAY{" "}
+            <Tooltip
+              text={`Lock funds for today (epoch: ${currentEpoch?.toString() || "?"})`}
+            />
+          </div>
           <button
             onClick={handlePrepareDay}
             disabled={isPrepareDayPending || !isConnected || allHabitsFunded}
             className="action-card-button"
-            title={
-              !isConnected
-                ? "Connect wallet to fund habits"
-                : allHabitsFunded
-                  ? "All habits are already funded for today"
-                  : `Lock funds for today (Epoch: ${currentEpoch?.toString() || "?"})`
-            }
           >
             {isPrepareDayPending ? (
               <>
@@ -444,17 +436,13 @@ export function ActionCards({
         </div>
 
         {/* Settle Yesterday Card */}
-        <div
-          className="action-card"
-          title={
-            !isConnected
-              ? "Connect wallet to settle"
-              : !hasAnyFundedHabit
-                ? "No funded habits to settle"
-                : `Settle yesterday (Epoch: ${currentEpoch ? Number(currentEpoch) - 1 : "?"})`
-          }
-        >
-          <div className="action-card-label">SETTLE YESTERDAY</div>
+        <div className="action-card">
+          <div className="action-card-label">
+            SETTLE YESTERDAY{" "}
+            <Tooltip
+              text={`Process habits for yesterday (epoch: ${currentEpoch ? Number(currentEpoch) - 1 : "?"})`}
+            />
+          </div>
           <button
             onClick={handleSettleDay}
             disabled={isSettleAllPending || !isConnected || !hasAnyFundedHabit}
@@ -471,17 +459,19 @@ export function ActionCards({
         </div>
 
         {/* Force Settle Card */}
-        <div
-          className="action-card"
-          title={
-            !isConnected
-              ? "Connect wallet to settle"
-              : !hasAnyFundedHabit
-                ? "No funded habits to settle"
-                : "For testing only - bypasses validation"
-          }
-        >
-          <div className="action-card-label">FORCE SETTLE</div>
+        <div className="action-card">
+          <div className="action-card-label">
+            FORCE SETTLE{" "}
+            <Tooltip
+              text={
+                <>
+                  Process habits for today (skips epoch validation)
+                  <br />
+                  For testing only
+                </>
+              }
+            />
+          </div>
           <button
             onClick={handleForceSettleDay}
             disabled={
