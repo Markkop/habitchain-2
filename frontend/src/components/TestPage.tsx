@@ -290,6 +290,9 @@ export function TestPage() {
   const [happyPathRunning, setHappyPathRunning] = useState(false);
   const [happyPathStep, setHappyPathStep] = useState<string>("");
   const [createdHabitId, setCreatedHabitId] = useState<number | null>(null);
+  const [happyPathCurrentStep, setHappyPathCurrentStep] = useState<number>(0);
+  const [happyPathError, setHappyPathError] = useState<string>("");
+  const [happyPathPaused, setHappyPathPaused] = useState(false);
 
   const {
     writeContract,
@@ -542,6 +545,69 @@ export function TestPage() {
     }
   };
 
+  // Helper to execute a transaction and wait for confirmation
+  const executeTransaction = async (
+    contractAddr: Address,
+    abi: readonly unknown[],
+    functionName: string,
+    args: unknown[],
+    value?: bigint
+  ): Promise<Hex> => {
+    return new Promise((resolve, reject) => {
+      let txHashLocal: Hex | undefined;
+
+      const checkConfirmation = async (hash: Hex) => {
+        try {
+          // Wait for the transaction to be mined
+          const receipt = await fetch(`${passetHub.rpcUrls.default.http[0]}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              jsonrpc: "2.0",
+              method: "eth_getTransactionReceipt",
+              params: [hash],
+              id: 1,
+            }),
+          }).then((r) => r.json());
+
+          if (receipt.result) {
+            if (receipt.result.status === "0x1") {
+              resolve(hash);
+            } else {
+              reject(new Error("Transaction failed on-chain"));
+            }
+          } else {
+            // Still pending, check again
+            setTimeout(() => checkConfirmation(hash), 2000);
+          }
+        } catch (err) {
+          reject(err);
+        }
+      };
+
+      const params: any = {
+        address: contractAddr,
+        abi,
+        functionName,
+        args,
+      };
+      if (value !== undefined) {
+        params.value = value;
+      }
+
+      writeContract(params as never, {
+        onSuccess: (hash) => {
+          txHashLocal = hash as Hex;
+          toast.info("Transaction submitted, waiting for confirmation...");
+          checkConfirmation(hash as Hex);
+        },
+        onError: (error) => {
+          reject(error);
+        },
+      });
+    });
+  };
+
   const runHappyPath = async () => {
     if (!habitTrackerAddr || !address) {
       toast.error("Wallet not connected or contract not found");
@@ -549,168 +615,172 @@ export function TestPage() {
     }
 
     setHappyPathRunning(true);
+    setHappyPathError("");
+    setHappyPathPaused(false);
+
+    const steps = [
+      {
+        name: "Deposit 100 PAS",
+        execute: async () => {
+          setHappyPathStep("Depositing 100 PAS...");
+          toast.info("Step 1/5: Depositing 100 PAS");
+          const hash = await executeTransaction(
+            habitTrackerAddr,
+            habitTrackerAbi,
+            "deposit",
+            [],
+            parseEther("100")
+          );
+          toast.success("✓ Deposit confirmed");
+          await new Promise((r) => setTimeout(r, 2000));
+          return hash;
+        },
+      },
+      {
+        name: "Create habit",
+        execute: async () => {
+          setHappyPathStep("Creating habit 'Do exercise'...");
+          toast.info("Step 2/5: Creating habit");
+
+          const habitText = "Do exercise";
+          const encoder = new TextEncoder();
+          const bytes = encoder.encode(habitText.slice(0, 32));
+          const bytes32 = new Uint8Array(32);
+          bytes32.set(bytes);
+          const habitBytes32 = `0x${Array.from(bytes32)
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join("")}` as Hex;
+
+          const hash = await executeTransaction(
+            habitTrackerAddr,
+            habitTrackerAbi,
+            "createHabit",
+            [habitBytes32]
+          );
+
+          const habitId = Number(habitCounter || 0);
+          setCreatedHabitId(habitId);
+          toast.success("✓ Habit created");
+          await new Promise((r) => setTimeout(r, 2000));
+          return hash;
+        },
+      },
+      {
+        name: "Fund habit",
+        execute: async () => {
+          setHappyPathStep("Funding habit (prepareDay)...");
+          toast.info("Step 3/5: Funding habit");
+          const hash = await executeTransaction(
+            habitTrackerAddr,
+            habitTrackerAbi,
+            "prepareDay",
+            [epochNow]
+          );
+          toast.success("✓ Habit funded");
+          await new Promise((r) => setTimeout(r, 2000));
+          return hash;
+        },
+      },
+      {
+        name: "Check in",
+        execute: async () => {
+          const habitId = createdHabitId ?? Number(habitCounter || 0);
+          setHappyPathStep("Checking in habit...");
+          toast.info("Step 4/5: Checking in");
+          const hash = await executeTransaction(
+            habitTrackerAddr,
+            habitTrackerAbi,
+            "checkIn",
+            [habitId, epochNow]
+          );
+          toast.success("✓ Checked in");
+          await new Promise((r) => setTimeout(r, 2000));
+          return hash;
+        },
+      },
+      {
+        name: "Force settle",
+        execute: async () => {
+          setHappyPathStep("Force settling...");
+          toast.info("Step 5/5: Force settling");
+
+          const settlerAddr = habitSettlerAddress[
+            chainId as keyof typeof habitSettlerAddress
+          ] as Address | undefined;
+
+          if (!settlerAddr) {
+            throw new Error("Settler contract not found");
+          }
+
+          const hash = await executeTransaction(
+            settlerAddr,
+            habitSettlerAbi,
+            "forceSettleDay",
+            [address, epochNow, 50]
+          );
+          toast.success("✓ Force settled");
+          await new Promise((r) => setTimeout(r, 2000));
+          return hash;
+        },
+      },
+    ];
 
     try {
-      // Step 1: Deposit 100 PAS
-      setHappyPathStep("Depositing 100 PAS...");
-      toast.info("Step 1/5: Depositing 100 PAS");
-
-      await new Promise<void>((resolve, reject) => {
-        const depositValue = parseEther("100");
-
-        writeContract(
-          {
-            address: habitTrackerAddr,
-            abi: habitTrackerAbi,
-            functionName: "deposit",
-            args: [],
-            value: depositValue,
-          } as never,
-          {
-            onSuccess: () => {
-              toast.success("✓ Deposit confirmed");
-              setTimeout(resolve, 2000); // Wait 2s for state to settle
-            },
-            onError: (error) => {
-              reject(error);
-            },
-          }
-        );
-      });
-
-      // Step 2: Create habit "Do exercise"
-      setHappyPathStep("Creating habit 'Do exercise'...");
-      toast.info("Step 2/5: Creating habit");
-
-      const habitText = "Do exercise";
-      const encoder = new TextEncoder();
-      const bytes = encoder.encode(habitText.slice(0, 32));
-      const bytes32 = new Uint8Array(32);
-      bytes32.set(bytes);
-      const habitBytes32 = `0x${Array.from(bytes32)
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("")}` as Hex;
-
-      await new Promise<void>((resolve, reject) => {
-        writeContract(
-          {
-            address: habitTrackerAddr,
-            abi: habitTrackerAbi,
-            functionName: "createHabit",
-            args: [habitBytes32],
-          } as never,
-          {
-            onSuccess: () => {
-              toast.success("✓ Habit created");
-              // Store the habit ID (assuming it's the next counter)
-              setTimeout(resolve, 2000);
-            },
-            onError: (error) => {
-              reject(error);
-            },
-          }
-        );
-      });
-
-      // Get the habit ID (it should be the current counter)
-      const habitId = Number(habitCounter || 0);
-      setCreatedHabitId(habitId);
-
-      // Step 3: Fund that habit (prepareDay)
-      setHappyPathStep("Funding habit (prepareDay)...");
-      toast.info("Step 3/5: Funding habit");
-
-      await new Promise<void>((resolve, reject) => {
-        writeContract(
-          {
-            address: habitTrackerAddr,
-            abi: habitTrackerAbi,
-            functionName: "prepareDay",
-            args: [epochNow],
-          } as never,
-          {
-            onSuccess: () => {
-              toast.success("✓ Habit funded");
-              setTimeout(resolve, 2000);
-            },
-            onError: (error) => {
-              reject(error);
-            },
-          }
-        );
-      });
-
-      // Step 4: Check in that habit
-      setHappyPathStep("Checking in habit...");
-      toast.info("Step 4/5: Checking in");
-
-      await new Promise<void>((resolve, reject) => {
-        writeContract(
-          {
-            address: habitTrackerAddr,
-            abi: habitTrackerAbi,
-            functionName: "checkIn",
-            args: [habitId, epochNow],
-          } as never,
-          {
-            onSuccess: () => {
-              toast.success("✓ Checked in");
-              setTimeout(resolve, 2000);
-            },
-            onError: (error) => {
-              reject(error);
-            },
-          }
-        );
-      });
-
-      // Step 5: Force settle
-      setHappyPathStep("Force settling...");
-      toast.info("Step 5/5: Force settling");
-
-      const settlerAddr = habitSettlerAddress[
-        chainId as keyof typeof habitSettlerAddress
-      ] as Address | undefined;
-
-      if (!settlerAddr) {
-        throw new Error("Settler contract not found");
+      // Start from the current step (allows retry from failed step)
+      for (let i = happyPathCurrentStep; i < steps.length; i++) {
+        setHappyPathCurrentStep(i);
+        await steps[i].execute();
+        setHappyPathCurrentStep(i + 1);
       }
-
-      await new Promise<void>((resolve, reject) => {
-        writeContract(
-          {
-            address: settlerAddr,
-            abi: habitSettlerAbi,
-            functionName: "forceSettleDay",
-            args: [address, epochNow, 50], // maxCount = 50 (settle all habits for the day)
-          } as never,
-          {
-            onSuccess: () => {
-              toast.success("✓ Force settled");
-              setTimeout(resolve, 2000);
-            },
-            onError: (error) => {
-              reject(error);
-            },
-          }
-        );
-      });
 
       // Success!
       setHappyPathStep("✓ Happy path complete!");
+      setHappyPathCurrentStep(0);
       toast.success("🎉 Happy path complete! All steps executed successfully.");
-    } catch (error: unknown) {
-      const errorMessage =
-        error instanceof Error ? error.message : String(error);
-      setHappyPathStep(`Error: ${errorMessage}`);
-      toast.error(`Happy path failed: ${errorMessage}`);
-    } finally {
-      setHappyPathRunning(false);
+
       setTimeout(() => {
         setHappyPathStep("");
         setCreatedHabitId(null);
+        setHappyPathError("");
       }, 5000);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
+      // Extract user-friendly error message
+      let friendlyError = errorMessage;
+      if (errorMessage.includes("User rejected")) {
+        friendlyError = "Transaction was rejected by user";
+      } else if (errorMessage.includes("insufficient funds")) {
+        friendlyError = "Insufficient funds for transaction";
+      } else if (errorMessage.includes("execution reverted")) {
+        friendlyError =
+          errorMessage.split("execution reverted:")[1]?.trim() ||
+          "Transaction reverted";
+      }
+
+      setHappyPathError(friendlyError);
+      setHappyPathStep(
+        `❌ Failed at step ${happyPathCurrentStep + 1}: ${steps[happyPathCurrentStep].name}`
+      );
+      setHappyPathPaused(true);
+      toast.error(`Failed: ${friendlyError}`, { duration: 10000 });
+    } finally {
+      setHappyPathRunning(false);
     }
+  };
+
+  const resetHappyPath = () => {
+    setHappyPathCurrentStep(0);
+    setHappyPathStep("");
+    setHappyPathError("");
+    setHappyPathPaused(false);
+    setCreatedHabitId(null);
+  };
+
+  const retryHappyPath = () => {
+    setHappyPathPaused(false);
+    runHappyPath();
   };
 
   const StatusIcon = ({ status }: { status: TestResult["status"] }) => {
@@ -770,28 +840,6 @@ export function TestPage() {
     );
   };
 
-  if (!isConnected) {
-    return (
-      <div className="test-page">
-        <div className="alert warning">
-          <AlertCircle size={18} />
-          <span>Connect wallet to use test page</span>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isCorrectNetwork) {
-    return (
-      <div className="test-page">
-        <div className="alert error">
-          <XCircle size={18} />
-          <span>Switch to Polkadot Paseo testnet</span>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="test-page compact">
       <meta name="robots" content="noindex" />
@@ -800,6 +848,23 @@ export function TestPage() {
         <h1>Contract Test Interface</h1>
         <p>Interactive testing for deployed contracts on Paseo testnet</p>
       </div>
+
+      {/* Show warnings if not connected or wrong network */}
+      {!isConnected && (
+        <div className="alert warning">
+          <AlertCircle size={18} />
+          <span>Connect wallet to interact with contracts</span>
+        </div>
+      )}
+
+      {isConnected && !isCorrectNetwork && (
+        <div className="alert error">
+          <XCircle size={18} />
+          <span>
+            Switch to Polkadot Paseo testnet to interact with contracts
+          </span>
+        </div>
+      )}
 
       {/* Network Info - Compact */}
       <div className="info-grid">
@@ -814,15 +879,29 @@ export function TestPage() {
         <div className="info-item">
           <span className="label">Wallet:</span>
           <span>
-            {address?.slice(0, 6)}...{address?.slice(-4)}
-            {address && (
-              <CopyButton textToCopy={address} label="Wallet" size={12} />
+            {address ? (
+              <>
+                {address.slice(0, 6)}...{address.slice(-4)}
+                <CopyButton textToCopy={address} label="Wallet" size={12} />
+              </>
+            ) : (
+              <span className="text-muted">Not connected</span>
             )}
           </span>
         </div>
         <div className="info-item">
           <span className="label">Epoch:</span>
-          <span>{epochNow !== undefined ? String(epochNow) : "..."}</span>
+          <span>
+            {isConnected && isCorrectNetwork ? (
+              epochNow !== undefined ? (
+                String(epochNow)
+              ) : (
+                "..."
+              )
+            ) : (
+              <span className="text-muted">—</span>
+            )}
+          </span>
         </div>
       </div>
 
@@ -844,23 +923,57 @@ export function TestPage() {
             <span>→</span>
             <span>5. Force settle</span>
           </div>
-          <button
-            onClick={runHappyPath}
-            disabled={happyPathRunning || isWritePending}
-            className="happy-path-btn"
-          >
-            {happyPathRunning ? (
-              <>
-                <Loader2 className="spin" size={18} />
-                Running...
-              </>
-            ) : (
-              "▶ Run Happy Path"
+          <div className="happy-path-controls">
+            <button
+              onClick={runHappyPath}
+              disabled={
+                !isConnected ||
+                !isCorrectNetwork ||
+                happyPathRunning ||
+                isWritePending ||
+                happyPathPaused
+              }
+              className="happy-path-btn"
+              title={
+                !isConnected
+                  ? "Connect wallet to run"
+                  : !isCorrectNetwork
+                    ? "Switch to Paseo testnet"
+                    : ""
+              }
+            >
+              {happyPathRunning ? (
+                <>
+                  <Loader2 className="spin" size={18} />
+                  Running... (Step {happyPathCurrentStep + 1}/5)
+                </>
+              ) : (
+                `▶ ${happyPathCurrentStep > 0 && !happyPathPaused ? "Resume from" : "Run"} Happy Path`
+              )}
+            </button>
+
+            {happyPathPaused && (
+              <div className="happy-path-error-controls">
+                <button
+                  onClick={retryHappyPath}
+                  className="happy-path-btn happy-path-btn-retry"
+                  disabled={!isConnected || !isCorrectNetwork}
+                >
+                  🔄 Retry from Step {happyPathCurrentStep + 1}
+                </button>
+                <button
+                  onClick={resetHappyPath}
+                  className="happy-path-btn happy-path-btn-reset"
+                >
+                  ↺ Reset & Start Over
+                </button>
+              </div>
             )}
-          </button>
+          </div>
+
           {happyPathStep && (
             <div className="happy-path-status">
-              {happyPathStep.startsWith("Error") ? (
+              {happyPathStep.startsWith("❌") ? (
                 <XCircle size={16} color="#dc3545" />
               ) : happyPathStep.startsWith("✓") ? (
                 <CheckCircle2 size={16} color="#28a745" />
@@ -870,6 +983,16 @@ export function TestPage() {
               <span>{happyPathStep}</span>
             </div>
           )}
+
+          {happyPathError && (
+            <div className="happy-path-error">
+              <AlertCircle size={16} />
+              <div>
+                <strong>Error:</strong> {happyPathError}
+              </div>
+            </div>
+          )}
+
           {createdHabitId !== null && (
             <div className="happy-path-info">
               Created Habit ID: <strong>{createdHabitId}</strong>
@@ -880,7 +1003,10 @@ export function TestPage() {
 
       {/* Dynamic Contract Sections */}
       {contracts.map((contract) => (
-        <div key={contract.name} className="contract-section">
+        <div
+          key={contract.name}
+          className={`contract-section ${!isConnected || !isCorrectNetwork ? "disabled" : ""}`}
+        >
           <div
             className="contract-header"
             onClick={() => toggleContract(contract.name)}
@@ -1004,8 +1130,19 @@ export function TestPage() {
 
                           <button
                             onClick={() => handleWrite(contract, writeFunc)}
-                            disabled={isWritePending}
+                            disabled={
+                              !isConnected ||
+                              !isCorrectNetwork ||
+                              isWritePending
+                            }
                             className="write-btn"
+                            title={
+                              !isConnected
+                                ? "Connect wallet to execute"
+                                : !isCorrectNetwork
+                                  ? "Switch to Paseo testnet"
+                                  : ""
+                            }
                           >
                             {isWritePending ? "..." : "Execute"}
                           </button>
@@ -1079,6 +1216,11 @@ export function TestPage() {
           color: var(--text-muted);
         }
 
+        .text-muted {
+          color: var(--text-muted);
+          opacity: 0.7;
+        }
+
         .happy-path-section {
           background: linear-gradient(135deg, rgba(64, 144, 255, 0.1), rgba(64, 144, 255, 0.05));
           border: 2px solid var(--primary-color);
@@ -1129,6 +1271,21 @@ export function TestPage() {
           font-weight: 500;
         }
 
+        .happy-path-controls {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          align-items: center;
+          width: 100%;
+        }
+
+        .happy-path-error-controls {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
         .happy-path-btn {
           padding: 14px 32px;
           background: var(--primary-color);
@@ -1155,6 +1312,26 @@ export function TestPage() {
           opacity: 0.6;
           cursor: not-allowed;
           transform: none;
+        }
+
+        .happy-path-btn-retry {
+          background: #28a745;
+          box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+
+        .happy-path-btn-retry:hover:not(:disabled) {
+          background: #218838;
+          box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .happy-path-btn-reset {
+          background: #6c757d;
+          box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        .happy-path-btn-reset:hover:not(:disabled) {
+          background: #5a6268;
+          box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
         }
 
         .happy-path-status {
@@ -1184,12 +1361,56 @@ export function TestPage() {
           font-size: 16px;
         }
 
+        .happy-path-error {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 16px 20px;
+          background: rgba(220, 53, 69, 0.1);
+          border: 2px solid rgba(220, 53, 69, 0.3);
+          border-radius: 10px;
+          font-size: 14px;
+          color: var(--text-color);
+          max-width: 600px;
+          width: 100%;
+        }
+
+        .happy-path-error svg {
+          flex-shrink: 0;
+          color: #dc3545;
+        }
+
+        .happy-path-error strong {
+          color: #dc3545;
+        }
+
         .contract-section {
           background: var(--bg-light);
           border-radius: 12px;
           margin-bottom: 12px;
           border: 1px solid var(--border-color);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+          position: relative;
+        }
+
+        .contract-section.disabled {
+          opacity: 0.7;
+        }
+
+        .contract-section.disabled::before {
+          content: "🔒 View Only - Connect wallet to interact";
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          font-size: 11px;
+          background: rgba(255, 193, 7, 0.2);
+          border: 1px solid rgba(255, 193, 7, 0.4);
+          padding: 4px 10px;
+          border-radius: 6px;
+          color: var(--text-color);
+          font-weight: 600;
+          z-index: 1;
+          pointer-events: none;
         }
 
         .contract-header {
@@ -1549,6 +1770,13 @@ export function TestPage() {
 
           .contract-title h2 {
             font-size: 18px;
+          }
+
+          .contract-section.disabled::before {
+            font-size: 10px;
+            padding: 3px 8px;
+            top: 6px;
+            right: 6px;
           }
         }
       `}</style>
