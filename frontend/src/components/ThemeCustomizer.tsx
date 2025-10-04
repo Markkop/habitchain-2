@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { themePresets, ThemePreset } from "../config/themePresets";
-import { X, Palette, RotateCcw } from "lucide-react";
+import { X, Palette, RotateCcw, Copy, Check } from "lucide-react";
 
 export function ThemeCustomizer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,6 +8,7 @@ export function ThemeCustomizer() {
     themePresets[0]
   );
   const [customColors, setCustomColors] = useState(themePresets[0].colors);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   // Load saved theme on mount
   useEffect(() => {
@@ -73,6 +74,38 @@ export function ThemeCustomizer() {
     setCurrentPreset(defaultPreset);
     setCustomColors(defaultPreset.colors);
     applyTheme(defaultPreset.colors);
+  };
+
+  const generatePaletteJSON = async () => {
+    const paletteData = {
+      id: "custom-palette-" + Date.now(),
+      name: "Custom Palette",
+      description: "User-generated custom color palette",
+      colors: customColors,
+    };
+
+    const jsonString = JSON.stringify(paletteData, null, 2);
+
+    try {
+      await navigator.clipboard.writeText(jsonString);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 3000);
+    } catch (err) {
+      console.error("Failed to copy to clipboard:", err);
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = jsonString;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 3000);
+      } catch (err2) {
+        console.error("Fallback copy failed:", err2);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   const colorInputs: Array<{
@@ -261,6 +294,30 @@ export function ThemeCustomizer() {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Generate Palette Button */}
+              <div className="theme-section">
+                <button
+                  onClick={generatePaletteJSON}
+                  className="theme-generate-button"
+                >
+                  {copySuccess ? (
+                    <>
+                      <Check size={16} />
+                      Copied to Clipboard!
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={16} />
+                      Generate Palette JSON
+                    </>
+                  )}
+                </button>
+                <p className="theme-generate-hint">
+                  Copy your custom palette as JSON to share with the developer
+                  for adding as a preset option.
+                </p>
               </div>
 
               {/* Preview Info */}
