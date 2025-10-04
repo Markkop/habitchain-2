@@ -129,7 +129,13 @@ function App() {
 
   return (
     <div className="container">
-      <Toaster position="top-right" richColors expand={false} />
+      <Toaster
+        position="top-right"
+        richColors
+        expand={false}
+        closeButton={true}
+        duration={5000}
+      />
 
       {/* Wallet and Network bar - compact, above title */}
       <div className="wallet-network-bar">

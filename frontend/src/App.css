@@ -773,6 +773,63 @@ button,
 
 /* New minimal UI styles */
 
+/* Toast/Sonner close button styling - minimal, top-right corner */
+[data-sonner-toast] [data-close-button] {
+  position: absolute !important;
+  top: 10px !important;
+  right: 16px !important;
+  left: auto !important;
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background-color: transparent !important;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+  border-radius: 0 !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 10 !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  opacity: 1 !important;
+  background-color: transparent !important;
+  background: none !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+}
+
+[data-sonner-toast] [data-close-button]:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+[data-sonner-toast] [data-close-button] svg {
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 2.5 !important;
+}
+
+/* Ensure toast has position relative for absolute positioning of close button */
+[data-sonner-toast] {
+  position: relative !important;
+  padding-right: 40px !important;
+}
+
 /* Compact wallet and network bar at top */
 .wallet-network-bar {
   display: flex;
