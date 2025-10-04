@@ -2425,3 +2425,123 @@ button,
     transform: translateX(-50%) translateY(0);
   }
 }
+
+/* Footer */
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 16px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+  text-align: center;
+}
+
+.footer-text strong {
+  color: var(--brand-pink);
+  font-weight: 600;
+}
+
+.footer-highlight {
+  color: var(--brand-green);
+  font-weight: 600;
+}
+
+.footer-separator {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.footer-hackathon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hackathon-logo {
+  height: 24px;
+  width: auto;
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
+}
+
+.footer-hackathon a:hover .hackathon-logo {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.team-avatars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-link {
+  display: block;
+  border-radius: 50%;
+  overflow: hidden;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  border: 2px solid var(--border-color);
+}
+
+.avatar-link:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px var(--brand-pink);
+}
+
+.team-avatar {
+  width: 32px;
+  height: 32px;
+  display: block;
+  border-radius: 50%;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  color: #181717;
+  background-color: #ffffff;
+  padding: 6px;
+  border-radius: 6px;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.footer-link:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .app-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-separator {
+    display: none;
+  }
+}

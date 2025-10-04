@@ -13,7 +13,7 @@ import { setupPolkadotTestnet } from "./utils/networkSetup";
 import { Toaster } from "sonner";
 import { useState, useEffect } from "react";
 import { CopyButton } from "./components/CopyButton";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import { ThemeCustomizer } from "./components/ThemeCustomizer";
 
 function App() {
@@ -253,6 +253,98 @@ function App() {
 
       {/* Main content - HabitTracker always visible */}
       <HabitTracker isConnected={isConnected} onConnect={handleConnect} />
+
+      {/* Footer */}
+      <footer className="app-footer">
+        <div className="footer-content">
+          <p className="footer-text">
+            Created with love by <strong>Habiteam</strong>
+          </p>
+          <div className="team-avatars">
+            <a
+              href="https://github.com/Markkop"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="avatar-link"
+              title="Markkop"
+            >
+              <img
+                src="https://github.com/Markkop.png"
+                alt="Markkop"
+                className="team-avatar"
+              />
+            </a>
+            <a
+              href="https://github.com/dutragustavo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="avatar-link"
+              title="dutragustavo"
+            >
+              <img
+                src="https://github.com/dutragustavo.png"
+                alt="dutragustavo"
+                className="team-avatar"
+              />
+            </a>
+            <a
+              href="https://github.com/hpereira1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="avatar-link"
+              title="hpereira1"
+            >
+              <img
+                src="https://github.com/hpereira1.png"
+                alt="hpereira1"
+                className="team-avatar"
+              />
+            </a>
+            <a
+              href="https://github.com/artur-simon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="avatar-link"
+              title="artur-simon"
+            >
+              <img
+                src="https://github.com/artur-simon.png"
+                alt="artur-simon"
+                className="team-avatar"
+              />
+            </a>
+          </div>
+        </div>
+        <p className="footer-text footer-separator">|</p>
+        <div className="footer-hackathon">
+          <p className="footer-text">
+            For the <span className="footer-highlight">Latin Hack</span>{" "}
+            hackathon
+          </p>
+          <a
+            href="https://latinhack.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Visit Latin Hack"
+          >
+            <img
+              src="https://latinhack.io/logo.png"
+              alt="Latin Hack"
+              className="hackathon-logo"
+            />
+          </a>
+        </div>
+        <p className="footer-text footer-separator">|</p>
+        <a
+          href="https://github.com/Markkop/habitchain-2"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-link"
+          title="View on GitHub"
+        >
+          <Github size={20} />
+        </a>
+      </footer>
     </div>
   );
 }
