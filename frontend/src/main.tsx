@@ -1,4 +1,5 @@
 import "./index.css";
+import "sonner/dist/styles.css";
 
 import ReactDOM from "react-dom/client";
 // IMP START - Setup Web3Auth Provider

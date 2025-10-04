@@ -18,9 +18,11 @@
   "dependencies": {
     "@tanstack/react-query": "^5.37.1",
     "@web3auth/modal": "^10.3.0",
+    "lucide-react": "^0.544.0",
     "ox": "^0.8.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "sonner": "^2.0.7",
     "wagmi": "^2.14.16"
   },
   "//IMP END": "IMP END - Web3Auth Installation",
