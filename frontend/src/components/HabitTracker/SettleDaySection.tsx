@@ -11,8 +11,10 @@ interface SettleDaySectionProps {
   isConnected: boolean;
   onConnect: () => void;
   address: `0x${string}` | undefined;
-  contractAddress: `0x${string}`;
-  abi: any;
+  habitTrackerAddress: `0x${string}`;
+  habitTrackerAbi: any;
+  habitSettlerAddress: `0x${string}`;
+  habitSettlerAbi: any;
   chainId: number;
   currentEpoch: bigint | undefined;
   onSuccess: () => void;
@@ -22,8 +24,10 @@ export function SettleDaySection({
   isConnected,
   onConnect,
   address,
-  contractAddress,
-  abi,
+  habitTrackerAddress,
+  habitTrackerAbi,
+  habitSettlerAddress,
+  habitSettlerAbi,
   chainId,
   currentEpoch,
   onSuccess,
@@ -59,10 +63,10 @@ export function SettleDaySection({
     hash: forceSettleDayHash,
   });
 
-  // Watch for SettledSuccess event
+  // Watch for SettledSuccess event from HabitTracker
   useWatchContractEvent({
-    address: contractAddress,
-    abi,
+    address: habitTrackerAddress,
+    abi: habitTrackerAbi,
     eventName: "SettledSuccess",
     chainId,
     onLogs(logs) {
@@ -87,10 +91,10 @@ export function SettleDaySection({
     },
   });
 
-  // Watch for SettledFail event
+  // Watch for SettledFail event from HabitTracker
   useWatchContractEvent({
-    address: contractAddress,
-    abi,
+    address: habitTrackerAddress,
+    abi: habitTrackerAbi,
     eventName: "SettledFail",
     chainId,
     onLogs(logs: any[]) {
@@ -192,8 +196,8 @@ export function SettleDaySection({
 
     settleAll(
       {
-        address: contractAddress,
-        abi,
+        address: habitSettlerAddress,
+        abi: habitSettlerAbi,
         functionName: "settleAll",
         args: [address, BigInt(yesterdayEpoch), 50],
       },
@@ -249,8 +253,8 @@ export function SettleDaySection({
 
     forceSettleDay(
       {
-        address: contractAddress,
-        abi,
+        address: habitSettlerAddress,
+        abi: habitSettlerAbi,
         functionName: "forceSettleDay",
         args: [address, BigInt(todayEpoch), 50],
       },

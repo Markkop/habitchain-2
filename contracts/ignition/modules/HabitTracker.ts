@@ -10,7 +10,13 @@ const HabitTrackerModule = buildModule("HabitTrackerModule", (m) => {
     const deployer = m.getAccount(0)
     const treasuryAddress = m.getParameter("treasuryAddress", deployer)
 
-    const habitTracker = m.contract("HabitTracker", [treasuryAddress])
+    // Staking adapter - optional, can be address(0) initially
+    const stakingAdapter = m.getParameter(
+        "stakingAdapter",
+        "0x0000000000000000000000000000000000000000"
+    )
+
+    const habitTracker = m.contract("HabitTracker", [treasuryAddress, stakingAdapter])
 
     return { habitTracker }
 })

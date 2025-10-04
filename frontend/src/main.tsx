@@ -2,6 +2,7 @@ import "./index.css";
 import "sonner/dist/styles.css";
 
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 // IMP START - Setup Web3Auth Provider
 import { Web3AuthProvider } from "@web3auth/modal/react";
 import web3AuthContextConfig from "./web3authContext";
@@ -27,7 +28,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     {/* // IMP START - Setup Wagmi Provider */}
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiConfig}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </WagmiProvider>
     </QueryClientProvider>
     {/* // IMP END - Setup Wagmi Provider */}

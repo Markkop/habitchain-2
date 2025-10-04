@@ -1,4 +1,5 @@
 import "./App.css";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import {
   useWeb3AuthConnect,
   useWeb3AuthDisconnect,
@@ -6,6 +7,7 @@ import {
 } from "@web3auth/modal/react";
 import { useAccount, useChainId } from "wagmi";
 import { HabitTracker } from "./components/HabitTracker";
+import { TestPage } from "./components/TestPage";
 import { passetHub } from "./wagmi-config";
 import { habitTrackerAddress } from "./generated";
 import { logConnection } from "./utils/logger";
@@ -17,6 +19,8 @@ import { ExternalLink, Github } from "lucide-react";
 import { ThemeCustomizer } from "./components/ThemeCustomizer";
 
 function App() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     connect,
     isConnected,
@@ -149,11 +153,22 @@ function App() {
                 : "Not Connected"}
             </span>
             {isConnected && address && (
-              <CopyButton
-                textToCopy={address}
-                label="Wallet address"
-                size={11}
-              />
+              <>
+                <CopyButton
+                  textToCopy={address}
+                  label="Wallet address"
+                  size={11}
+                />
+                <a
+                  href={`${passetHub.blockExplorers.default.url}/address/${address}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="icon-btn-inline"
+                  title="View wallet on block explorer"
+                >
+                  <ExternalLink size={11} />
+                </a>
+              </>
             )}
           </div>
           <div className="wallet-network-divider">•</div>
@@ -238,6 +253,23 @@ function App() {
               )}
             </>
           )}
+          <button
+            onClick={() =>
+              navigate(
+                location.pathname.includes("/test")
+                  ? `${import.meta.env.BASE_URL}`
+                  : `${import.meta.env.BASE_URL}test`
+              )
+            }
+            className="btn-compact"
+            title={
+              location.pathname.includes("/test")
+                ? "Go to Home"
+                : "Go to Test Page"
+            }
+          >
+            {location.pathname.includes("/test") ? "Home" : "Test"}
+          </button>
           <ThemeCustomizer inline />
         </div>
       </div>
@@ -251,14 +283,22 @@ function App() {
         <h1 className="title">HabitChain</h1>
       </div>
 
-      {/* Main content - HabitTracker always visible */}
-      <HabitTracker isConnected={isConnected} onConnect={handleConnect} />
+      {/* Main content - Routes */}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <HabitTracker isConnected={isConnected} onConnect={handleConnect} />
+          }
+        />
+        <Route path="/test" element={<TestPage />} />
+      </Routes>
 
       {/* Footer */}
       <footer className="app-footer">
         <div className="footer-content">
           <p className="footer-text">
-            Created with love by <strong>Habiteam</strong>
+            Built with love by <strong>Habiteam</strong>
           </p>
           <div className="team-avatars">
             <a

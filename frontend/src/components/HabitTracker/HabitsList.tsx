@@ -165,7 +165,9 @@ export function HabitsList({
     console.log("Achieve habit:", habitId);
   };
 
-  const activeHabits = Object.values(habits).filter((habit) => !habit.archived);
+  const activeHabits = Object.entries(habits).filter(
+    ([_, habit]) => !habit.archived
+  );
 
   return (
     <div className="section-card">
@@ -195,8 +197,9 @@ export function HabitsList({
         {!isConnected ? (
           <p className="hint-text">Connect wallet to view your habits</p>
         ) : (
-          activeHabits.map((habit) => {
-            const status = habitStatuses[habit.id];
+          activeHabits.map(([habitId, habit]) => {
+            const id = Number(habitId);
+            const status = habitStatuses[id];
             const hasStatus = !!status;
             const canCheckIn = hasStatus && status.funded && !status.checked;
             const isCheckedIn = hasStatus && status.checked;
@@ -206,7 +209,7 @@ export function HabitsList({
             // Archive button (always shown, but disabled if not checked in)
             buttons.push({
               label: "Archive",
-              onClick: () => handleAchieve(habit.id),
+              onClick: () => handleAchieve(id),
               disabled: !isCheckedIn,
               variant: "warning" as const,
             });
@@ -215,7 +218,7 @@ export function HabitsList({
             if (canCheckIn) {
               buttons.push({
                 label: isCheckInPending ? "Pending..." : "Check In",
-                onClick: () => handleCheckIn(habit.id),
+                onClick: () => handleCheckIn(id),
                 disabled: isCheckInPending,
                 variant: "success" as const,
               });
@@ -223,7 +226,7 @@ export function HabitsList({
 
             return (
               <HabitCard
-                key={habit.id}
+                key={id}
                 habit={habit}
                 habitStatus={status}
                 buttons={buttons}

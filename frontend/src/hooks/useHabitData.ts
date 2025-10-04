@@ -38,30 +38,43 @@ export function useHabitData(
           args: [address, i],
         });
 
-        if (
-          habitData &&
-          habitData[1] !== "0x0000000000000000000000000000000000000000"
-        ) {
+        // Check if habit exists (createdAtEpoch != 0)
+        if (habitData && habitData[1] !== 0n) {
           newHabits[i] = {
-            id: Number(habitData[0]),
-            owner: habitData[1] as `0x${string}`,
-            text: bytes32ToText(habitData[2] as `0x${string}`),
-            createdAtEpoch: habitData[3] as bigint,
-            archived: habitData[4] as boolean,
+            text: bytes32ToText(habitData[0] as `0x${string}`),
+            createdAtEpoch: habitData[1] as bigint,
+            archived: habitData[2] as boolean,
           };
 
-          // Fetch daily status if we have current epoch
-          if (currentEpoch && !habitData[4]) {
-            const statusData: any = await readContract(config, {
-              address: contractAddress,
-              abi: habitTrackerAbi,
-              functionName: "dailyStatuses",
-              args: [address, currentEpoch, i],
-            });
+          // Fetch daily status from bitmaps if we have current epoch
+          if (currentEpoch && !habitData[2]) {
+            const [fundedBitmap, checkedBitmap, settledBitmap] = await Promise.all([
+              readContract(config, {
+                address: contractAddress,
+                abi: habitTrackerAbi,
+                functionName: "funded",
+                args: [address, currentEpoch],
+              }),
+              readContract(config, {
+                address: contractAddress,
+                abi: habitTrackerAbi,
+                functionName: "checked",
+                args: [address, currentEpoch],
+              }),
+              readContract(config, {
+                address: contractAddress,
+                abi: habitTrackerAbi,
+                functionName: "settled",
+                args: [address, currentEpoch],
+              }),
+            ]);
 
-            if (statusData !== undefined) {
-              newStatuses[i] = parseDailyStatus(Number(statusData));
-            }
+            const mask = 1n << BigInt(i);
+            newStatuses[i] = {
+              funded: ((fundedBitmap as bigint) & mask) !== 0n,
+              checked: ((checkedBitmap as bigint) & mask) !== 0n,
+              settled: ((settledBitmap as bigint) & mask) !== 0n,
+            };
           }
         }
       } catch (error) {

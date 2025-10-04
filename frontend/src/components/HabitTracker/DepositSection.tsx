@@ -144,12 +144,13 @@ export function DepositSection({
     );
     setWithdrawToastId(toastId);
 
+    // move(from: 0=deposit, to: 2=external, amount)
     withdraw(
       {
         address: contractAddress,
         abi,
-        functionName: "withdraw",
-        args: [value],
+        functionName: "move",
+        args: [0, 2, value],
       },
       {
         onSuccess: (hash) => {

@@ -1,5 +1,5 @@
 import { passetHub } from "../../wagmi-config";
-import { useHabitContract } from "../../hooks/useHabitContract";
+import { useContracts } from "../../hooks/useContracts";
 import { useHabitData } from "../../hooks/useHabitData";
 import { StatsBar } from "./StatsBar";
 import { ActionCards } from "./ActionCards";
@@ -14,7 +14,8 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
   const {
     address,
     chainId,
-    contractAddress,
+    habitTracker,
+    habitSettler,
     userState,
     userStateError,
     userStateLoading,
@@ -23,12 +24,11 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
     refetchUserState,
     refetchHabitCounter,
     refetchEpoch,
-    abi,
-  } = useHabitContract();
+  } = useContracts();
 
   const { habits, habitStatuses, refetchHabits } = useHabitData(
     address,
-    contractAddress,
+    habitTracker.address,
     habitCounter,
     currentEpoch
   );
@@ -40,7 +40,7 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
     refetchHabits();
   };
 
-  if (!contractAddress) {
+  if (!habitTracker.address || !habitSettler.address) {
     return (
       <div className="section-card">
         <h2>⚠️ HabitTracker Contract Not Deployed</h2>
@@ -61,8 +61,8 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
         userState={userState}
         userStateLoading={userStateLoading}
         userStateError={userStateError}
-        contractAddress={contractAddress}
-        abi={abi}
+        contractAddress={habitTracker.address}
+        abi={habitTracker.abi}
         onSuccess={handleRefetch}
       />
 
@@ -70,8 +70,10 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
         isConnected={isConnected}
         onConnect={onConnect}
         address={address}
-        contractAddress={contractAddress}
-        abi={abi}
+        habitTrackerAddress={habitTracker.address}
+        habitTrackerAbi={habitTracker.abi}
+        habitSettlerAddress={habitSettler.address}
+        habitSettlerAbi={habitSettler.abi}
         chainId={chainId}
         currentEpoch={currentEpoch}
         habitStatuses={habitStatuses}
@@ -82,8 +84,8 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
         isConnected={isConnected}
         onConnect={onConnect}
         address={address}
-        contractAddress={contractAddress}
-        abi={abi}
+        contractAddress={habitTracker.address}
+        abi={habitTracker.abi}
         habits={habits}
         habitStatuses={habitStatuses}
         currentEpoch={currentEpoch}

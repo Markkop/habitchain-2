@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/HabitTracker.sol": {
-      "lastModificationDate": 1759526251642,
-      "contentHash": "056d89b713fbbccff7ab9a939b4fae1a",
-      "sourceName": "contracts/HabitTracker.sol",
+    "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/HabitSettler.sol": {
+      "lastModificationDate": 1759554698134,
+      "contentHash": "9059e7a750a0959f1926b72aa5cbf735",
+      "sourceName": "contracts/HabitSettler.sol",
       "solcConfig": {
         "version": "0.8.28",
         "settings": {
@@ -41,7 +41,189 @@
         "^0.8.28"
       ],
       "artifacts": [
+        "HabitSettler",
+        "IHabitTracker"
+      ]
+    },
+    "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/HabitTracker.sol": {
+      "lastModificationDate": 1759563505194,
+      "contentHash": "f0eddc49ed01d5b5c010a45ecdecadc1",
+      "sourceName": "contracts/HabitTracker.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": true,
+            "parameters": "z",
+            "fallbackOz": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi"
+              ]
+            }
+          },
+          "resolc": {
+            "version": "latest",
+            "compilerSource": "npm",
+            "settings": {
+              "optimizer": {
+                "enabled": true,
+                "parameters": "z",
+                "fallbackOz": true,
+                "runs": 200
+              }
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IStakingAdapter.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
         "HabitTracker"
+      ]
+    },
+    "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/interfaces/IStakingAdapter.sol": {
+      "lastModificationDate": 1759561777385,
+      "contentHash": "cdf41b5f0e2953ee82cf571510e658ad",
+      "sourceName": "contracts/interfaces/IStakingAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": true,
+            "parameters": "z",
+            "fallbackOz": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi"
+              ]
+            }
+          },
+          "resolc": {
+            "version": "latest",
+            "compilerSource": "npm",
+            "settings": {
+              "optimizer": {
+                "enabled": true,
+                "parameters": "z",
+                "fallbackOz": true,
+                "runs": 200
+              }
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "IStakingAdapter"
+      ]
+    },
+    "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/mocks/MockStakingRewards.sol": {
+      "lastModificationDate": 1759561784829,
+      "contentHash": "7c325badf87beef54108ee42c08da547",
+      "sourceName": "contracts/mocks/MockStakingRewards.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": true,
+            "parameters": "z",
+            "fallbackOz": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi"
+              ]
+            }
+          },
+          "resolc": {
+            "version": "latest",
+            "compilerSource": "npm",
+            "settings": {
+              "optimizer": {
+                "enabled": true,
+                "parameters": "z",
+                "fallbackOz": true,
+                "runs": 200
+              }
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IStakingAdapter.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "MockStakingRewards"
+      ]
+    },
+    "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/adapters/MoonwellAdapter.sol": {
+      "lastModificationDate": 1759561804613,
+      "contentHash": "da98e432354517bbc570a9bb5ac3de77",
+      "sourceName": "contracts/adapters/MoonwellAdapter.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": true,
+            "parameters": "z",
+            "fallbackOz": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi"
+              ]
+            }
+          },
+          "resolc": {
+            "version": "latest",
+            "compilerSource": "npm",
+            "settings": {
+              "optimizer": {
+                "enabled": true,
+                "parameters": "z",
+                "fallbackOz": true,
+                "runs": 200
+              }
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IStakingAdapter.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.28"
+      ],
+      "artifacts": [
+        "IComptroller",
+        "IERC20",
+        "IMTokenNative",
+        "MoonwellAdapter"
       ]
     }
   }

@@ -1402,6 +1402,17 @@ button,
   border-color: var(--primary-hover);
 }
 
+.btn-compact-active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.btn-compact-active:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
 /* Stats bar at top of app */
 .stats-bar {
   display: flex;
@@ -2196,6 +2207,14 @@ button,
   color: var(--error-color);
 }
 
+.claim-yield-icon {
+  color: var(--success-color);
+}
+
+.claim-both-icon {
+  color: var(--error-color);
+}
+
 .icon-button {
   width: 28px;
   height: 28px;
@@ -2544,4 +2563,40 @@ button,
   .footer-separator {
     display: none;
   }
+}
+
+/* Navigation styles */
+.app-nav {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  background-color: var(--bg-light);
+  border: 2px solid var(--border-color);
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  background-color: var(--bg-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link-active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.nav-link-active:hover {
+  background-color: var(--primary-hover, #5090ff);
 }

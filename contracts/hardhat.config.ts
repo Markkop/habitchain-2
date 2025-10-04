@@ -38,16 +38,39 @@ const config: HardhatUserConfig = {
       polkavm: true,
       url: "http://127.0.0.1:8545/",
     },
+
+    // ========== TESTNETS ==========
+
     // Polkadot Hub TestNet (Paseo Asset Hub)
     passetHub: {
       polkavm: true,
       url: "https://testnet-passet-hub-eth-rpc.polkadot.io",
       accounts: privateKey ? [privateKey] : [],
+      gasMultiplier: 2,
     },
     // Alternative name for the same network
     polkadotHubTestnet: {
       polkavm: true,
       url: "https://testnet-passet-hub-eth-rpc.polkadot.io",
+      accounts: privateKey ? [privateKey] : [],
+      gasMultiplier: 2,
+    },
+
+    // Moonbase Alpha (Moonbeam Testnet)
+    moonbaseAlpha: {
+      polkavm: false, // Standard EVM, not PolkaVM
+      url: "https://rpc.api.moonbase.moonbeam.network",
+      chainId: 1287,
+      accounts: privateKey ? [privateKey] : [],
+    },
+
+    // ========== PRODUCTION ==========
+
+    // Moonbeam (Polkadot EVM Parachain)
+    moonbeam: {
+      polkavm: false, // Standard EVM, not PolkaVM
+      url: process.env.MOONBEAM_RPC || "https://moonbeam-rpc.dwellir.com",
+      chainId: 1284,
       accounts: privateKey ? [privateKey] : [],
     },
   },

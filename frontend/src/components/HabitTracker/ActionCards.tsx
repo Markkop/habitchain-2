@@ -14,8 +14,10 @@ interface ActionCardsProps {
   isConnected: boolean;
   onConnect: () => void;
   address: `0x${string}` | undefined;
-  contractAddress: `0x${string}`;
-  abi: any;
+  habitTrackerAddress: `0x${string}`;
+  habitTrackerAbi: any;
+  habitSettlerAddress: `0x${string}`;
+  habitSettlerAbi: any;
   chainId: number;
   currentEpoch: bigint | undefined;
   habitStatuses: Record<number, DailyStatus>;
@@ -26,8 +28,10 @@ export function ActionCards({
   isConnected,
   onConnect,
   address,
-  contractAddress,
-  abi,
+  habitTrackerAddress,
+  habitTrackerAbi,
+  habitSettlerAddress,
+  habitSettlerAbi,
   chainId,
   currentEpoch,
   habitStatuses,
@@ -99,8 +103,8 @@ export function ActionCards({
 
   // Watch for DayPrepared event
   useWatchContractEvent({
-    address: contractAddress,
-    abi,
+    address: habitTrackerAddress,
+    abi: habitTrackerAbi,
     eventName: "DayPrepared",
     chainId,
     onLogs(logs) {
@@ -134,10 +138,10 @@ export function ActionCards({
     },
   });
 
-  // Watch for SettledSuccess event
+  // Watch for SettledSuccess event from HabitTracker (emitted when HabitSettler calls settle)
   useWatchContractEvent({
-    address: contractAddress,
-    abi,
+    address: habitTrackerAddress,
+    abi: habitTrackerAbi,
     eventName: "SettledSuccess",
     chainId,
     onLogs(logs) {
@@ -162,10 +166,10 @@ export function ActionCards({
     },
   });
 
-  // Watch for SettledFail event
+  // Watch for SettledFail event from HabitTracker
   useWatchContractEvent({
-    address: contractAddress,
-    abi,
+    address: habitTrackerAddress,
+    abi: habitTrackerAbi,
     eventName: "SettledFail",
     chainId,
     onLogs(logs: any[]) {
@@ -275,8 +279,8 @@ export function ActionCards({
 
     prepareDay(
       {
-        address: contractAddress,
-        abi,
+        address: habitTrackerAddress,
+        abi: habitTrackerAbi,
         functionName: "prepareDay",
         args: [currentEpoch],
       },
@@ -322,8 +326,8 @@ export function ActionCards({
 
     settleAll(
       {
-        address: contractAddress,
-        abi,
+        address: habitSettlerAddress,
+        abi: habitSettlerAbi,
         functionName: "settleAll",
         args: [address, BigInt(yesterdayEpoch), 50],
       },
@@ -376,8 +380,8 @@ export function ActionCards({
 
     forceSettleDay(
       {
-        address: contractAddress,
-        abi,
+        address: habitSettlerAddress,
+        abi: habitSettlerAbi,
         functionName: "forceSettleDay",
         args: [address, BigInt(todayEpoch), 50],
       },

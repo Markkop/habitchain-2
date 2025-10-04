@@ -1,0 +1,33 @@
+{
+  "network": "polkadotHubTestnet",
+  "timestamp": "2025-10-04T07:54:56.187Z",
+  "duration": "238.35s",
+  "contracts": [
+    {
+      "contract": "HabitTracker",
+      "address": "0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972",
+      "timestamp": 1759564292817
+    },
+    {
+      "contract": "MockStakingRewards",
+      "address": "0x554d6e4Df553FBa38A5Fadb863a3D77dBd9975d0",
+      "timestamp": 1759564376936
+    },
+    {
+      "contract": "HabitSettler",
+      "address": "0x7689B05aE9bf0463371869048A2d553BF331F340",
+      "timestamp": 1759564472807
+    }
+  ],
+  "config": {
+    "deployMockStaking": true,
+    "mockStakingRatePerSecond": "35000000000000",
+    "mockStakingFundAmount": "1000000000000000000",
+    "deploySettler": true,
+    "autoUpdateStakingAdapter": true,
+    "confirmBeforeDeploy": false,
+    "verifyContracts": false,
+    "waitBetweenDeployments": 20,
+    "deploymentRetries": 3
+  }
+}

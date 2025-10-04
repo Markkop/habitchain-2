@@ -6,11 +6,13 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { Clipboard, X, Plus, ArrowUp, Loader2, Check } from "lucide-react";
+import { Clipboard, X, Plus, Minus, Loader2, Check, Coins } from "lucide-react";
 import { logTransaction, logTxStatus } from "../../utils/logger";
 import { setupPolkadotTestnet } from "../../utils/networkSetup";
 import type { UserState } from "../../types/habit";
-import { Tooltip } from "../Tooltip";
+import { Tooltip, TooltipWrapper } from "../Tooltip";
+import { useReadHabitTrackerStakingAdapter } from "../../generated";
+import { useChainId } from "wagmi";
 
 interface StatsBarProps {
   isConnected: boolean;
@@ -32,6 +34,7 @@ export function StatsBar({
   onSuccess,
 }: StatsBarProps) {
   const { address } = useAccount();
+  const chainId = useChainId();
   const [showDepositInput, setShowDepositInput] = useState(false);
   const [depositAmount, setDepositAmount] = useState("");
   const [showSuccessCheck, setShowSuccessCheck] = useState(false);
@@ -39,13 +42,27 @@ export function StatsBar({
   const [withdrawError, setWithdrawError] = useState<string | null>(null);
   const [depositToastId, setDepositToastId] = useState<string | number>();
   const [withdrawToastId, setWithdrawToastId] = useState<string | number>();
+  const [claimYieldToastId, setClaimYieldToastId] = useState<string | number>();
+  const [claimBothToastId, setClaimBothToastId] = useState<string | number>();
+  const [claimYieldError, setClaimYieldError] = useState<string | null>(null);
+  const [claimBothError, setClaimBothError] = useState<string | null>(null);
 
   const depositHandledRef = useRef(false);
   const withdrawHandledRef = useRef(false);
+  const claimYieldHandledRef = useRef(false);
+  const claimBothHandledRef = useRef(false);
 
   // Get wallet balance
   const { data: walletBalance } = useBalance({
     address: address,
+  });
+
+  // Get staking adapter address
+  const { data: adapterAddress } = useReadHabitTrackerStakingAdapter({
+    chainId: chainId as any,
+    query: {
+      enabled: !!contractAddress,
+    },
   });
 
   const {
@@ -60,12 +77,32 @@ export function StatsBar({
     isPending: isWithdrawPending,
   } = useWriteContract();
 
+  const {
+    writeContract: claimYield,
+    data: claimYieldHash,
+    isPending: isClaimYieldPending,
+  } = useWriteContract();
+
+  const {
+    writeContract: claimBoth,
+    data: claimBothHash,
+    isPending: isClaimBothPending,
+  } = useWriteContract();
+
   const { isSuccess: isDepositSuccess } = useWaitForTransactionReceipt({
     hash: depositHash,
   });
 
   const { isSuccess: isWithdrawSuccess } = useWaitForTransactionReceipt({
     hash: withdrawHash,
+  });
+
+  const { isSuccess: isClaimYieldSuccess } = useWaitForTransactionReceipt({
+    hash: claimYieldHash,
+  });
+
+  const { isSuccess: isClaimBothSuccess } = useWaitForTransactionReceipt({
+    hash: claimBothHash,
   });
 
   useEffect(() => {
@@ -113,6 +150,50 @@ export function StatsBar({
       return () => clearTimeout(timer);
     }
   }, [isWithdrawSuccess, withdrawToastId, onSuccess]);
+
+  useEffect(() => {
+    if (isClaimYieldSuccess && !claimYieldHandledRef.current) {
+      claimYieldHandledRef.current = true;
+      logTxStatus(
+        "🌱",
+        "Claim Yield",
+        "success",
+        "yield rewards claimed",
+        claimYieldToastId
+      );
+      setShowSuccessCheck(true);
+      setClaimYieldToastId(undefined);
+      setClaimYieldError(null);
+      onSuccess();
+
+      const timer = setTimeout(() => {
+        setShowSuccessCheck(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isClaimYieldSuccess, claimYieldToastId, onSuccess]);
+
+  useEffect(() => {
+    if (isClaimBothSuccess && !claimBothHandledRef.current) {
+      claimBothHandledRef.current = true;
+      logTxStatus(
+        "💰",
+        "Claim All",
+        "success",
+        "all rewards claimed",
+        claimBothToastId
+      );
+      setShowSuccessCheck(true);
+      setClaimBothToastId(undefined);
+      setClaimBothError(null);
+      onSuccess();
+
+      const timer = setTimeout(() => {
+        setShowSuccessCheck(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isClaimBothSuccess, claimBothToastId, onSuccess]);
 
   const handleDeposit = () => {
     if (!depositAmount || !contractAddress) return;
@@ -165,12 +246,13 @@ export function StatsBar({
     );
     setWithdrawToastId(toastId);
 
+    // move(from: 0=deposit, to: 2=external, amount)
     withdraw(
       {
         address: contractAddress,
         abi,
-        functionName: "withdraw",
-        args: [value],
+        functionName: "move",
+        args: [0, 2, value],
       },
       {
         onSuccess: (hash) => {
@@ -193,6 +275,84 @@ export function StatsBar({
     setShowDepositInput(true);
   };
 
+  const handleClaimYield = () => {
+    if (
+      !userState ||
+      !contractAddress ||
+      !adapterAddress ||
+      userState.yieldRewards <= 0n
+    )
+      return;
+    if (adapterAddress === "0x0000000000000000000000000000000000000000") return;
+
+    claimYieldHandledRef.current = false;
+    const toastId = logTransaction(
+      "🌱",
+      "Claim Yield",
+      `Claiming ${(Math.ceil(parseFloat(formatEther(userState.yieldRewards)) * 100) / 100).toFixed(2)} PAS yield rewards`,
+      "claimYield",
+      {}
+    );
+    setClaimYieldToastId(toastId);
+
+    claimYield(
+      {
+        address: contractAddress,
+        abi,
+        functionName: "claimYieldRewards",
+        args: [],
+      },
+      {
+        onSuccess: (hash) => {
+          logTxStatus("🌱", "Claim Yield", "submitted", hash, toastId);
+        },
+        onError: (error) => {
+          logTxStatus("🌱", "Claim Yield", "failed", error.message, toastId);
+          setClaimYieldToastId(undefined);
+          setClaimYieldError(error.message);
+        },
+      }
+    );
+  };
+
+  const handleClaimBoth = () => {
+    if (!userState || !contractAddress) return;
+    const totalRewards =
+      userState.stakedAmount +
+      userState.yieldRewards +
+      userState.claimableBalance;
+    if (totalRewards <= 0n) return;
+
+    claimBothHandledRef.current = false;
+    const toastId = logTransaction(
+      "💰",
+      "Claim All",
+      `Claiming all rewards: ${formatEther(totalRewards)} PAS (staked: ${formatEther(userState.stakedAmount)}, yield: ${(Math.ceil(parseFloat(formatEther(userState.yieldRewards)) * 100) / 100).toFixed(2)}, habit: ${formatEther(userState.claimableBalance)})`,
+      "claimBoth",
+      {}
+    );
+    setClaimBothToastId(toastId);
+
+    claimBoth(
+      {
+        address: contractAddress,
+        abi,
+        functionName: "claimAll",
+        args: [],
+      },
+      {
+        onSuccess: (hash) => {
+          logTxStatus("💰", "Claim All", "submitted", hash, toastId);
+        },
+        onError: (error) => {
+          logTxStatus("💰", "Claim All", "failed", error.message, toastId);
+          setClaimBothToastId(undefined);
+          setClaimBothError(error.message);
+        },
+      }
+    );
+  };
+
   return (
     <>
       <div className="habit-stats-bar">
@@ -210,28 +370,32 @@ export function StatsBar({
               <span className="stat-label">DEPOSIT</span>
               <div className="stat-inline-actions">
                 {!showDepositInput && (
-                  <span
-                    className="icon-small deposit-icon"
-                    onClick={handleDepositClick}
-                  >
-                    <Plus size={12} />
-                  </span>
+                  <TooltipWrapper text="Add">
+                    <span
+                      className="icon-small deposit-icon"
+                      onClick={handleDepositClick}
+                    >
+                      <Plus size={12} />
+                    </span>
+                  </TooltipWrapper>
                 )}
                 {isConnected && userState && userState.depositBalance > 0n && (
-                  <span
-                    className={`icon-small withdraw-icon ${isWithdrawPending ? "spinning" : ""}`}
-                    onClick={isWithdrawPending ? undefined : handleWithdraw}
-                    style={{
-                      cursor: isWithdrawPending ? "not-allowed" : "pointer",
-                      opacity: isWithdrawPending ? 0.6 : 1,
-                    }}
-                  >
-                    {isWithdrawPending ? (
-                      <Loader2 size={12} />
-                    ) : (
-                      <ArrowUp size={12} />
-                    )}
-                  </span>
+                  <TooltipWrapper text="Withdraw All">
+                    <span
+                      className={`icon-small withdraw-icon ${isWithdrawPending ? "spinning" : ""}`}
+                      onClick={isWithdrawPending ? undefined : handleWithdraw}
+                      style={{
+                        cursor: isWithdrawPending ? "not-allowed" : "pointer",
+                        opacity: isWithdrawPending ? 0.6 : 1,
+                      }}
+                    >
+                      {isWithdrawPending ? (
+                        <Loader2 size={12} />
+                      ) : (
+                        <Minus size={12} />
+                      )}
+                    </span>
+                  </TooltipWrapper>
                 )}
               </div>
             </div>
@@ -339,7 +503,18 @@ export function StatsBar({
         </div>
         <div className="stat-card">
           <div className="stat-label">
-            Staked <Tooltip text={<>"PAS" at stake yield extra rewards</>} />
+            AT STAKE{" "}
+            <Tooltip
+              text={
+                <>
+                  "PAS" locked for today's habits
+                  <br />
+                  Complete them to start earning yield rewards
+                  <br />
+                  If not checked in, they will be slashed
+                </>
+              }
+            />
           </div>
           <div className="stat-value">
             {isConnected && userState
@@ -348,30 +523,82 @@ export function StatsBar({
           </div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">
-            Rewards{" "}
-            <Tooltip
-              text={
-                <>
-                  Your "PAS" back + yield rewards.
-                  <br />
-                  Keeps yield rewards while not claimed
-                </>
-              }
-            />
+          <div className="stat-label-with-actions">
+            <span className="stat-label">
+              Rewards{" "}
+              <Tooltip
+                text={
+                  <>
+                    Successful rewards staked in Moonwell.
+                    <br />
+                    Generates yield rewards over time.
+                  </>
+                }
+              />
+            </span>
+            <div className="stat-inline-actions">
+              {isConnected &&
+                userState &&
+                (userState.stakedAmount > 0n ||
+                  userState.claimableBalance > 0n ||
+                  userState.yieldRewards > 0n) && (
+                  <TooltipWrapper text="Withdraw all rewards">
+                    <span
+                      className={`icon-small claim-both-icon ${isClaimBothPending ? "spinning" : ""}`}
+                      onClick={isClaimBothPending ? undefined : handleClaimBoth}
+                      style={{
+                        cursor: isClaimBothPending ? "not-allowed" : "pointer",
+                        opacity: isClaimBothPending ? 0.6 : 1,
+                      }}
+                    >
+                      {isClaimBothPending ? (
+                        <Loader2 size={12} />
+                      ) : (
+                        <Minus size={12} />
+                      )}
+                    </span>
+                  </TooltipWrapper>
+                )}
+              {isConnected && userState && userState.yieldRewards > 0n && (
+                <TooltipWrapper text="Harvest yield rewards only">
+                  <span
+                    className={`icon-small claim-yield-icon ${isClaimYieldPending ? "spinning" : ""}`}
+                    onClick={isClaimYieldPending ? undefined : handleClaimYield}
+                    style={{
+                      cursor: isClaimYieldPending ? "not-allowed" : "pointer",
+                      opacity: isClaimYieldPending ? 0.6 : 1,
+                    }}
+                  >
+                    {isClaimYieldPending ? (
+                      <Loader2 size={12} />
+                    ) : (
+                      <Coins size={12} />
+                    )}
+                  </span>
+                </TooltipWrapper>
+              )}
+            </div>
           </div>
           <div className="stat-value">
-            {isConnected && userState
-              ? `${formatEther(userState.claimableBalance)} PAS`
-              : "0 PAS"}
-          </div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Habits</div>
-          <div className="stat-value">
-            {isConnected && userState
-              ? userState.activeHabitCount.toString()
-              : "0"}
+            {isConnected && userState ? (
+              <>
+                {formatEther(userState.stakedAmount)} PAS
+                {userState.yieldRewards > 0n && (
+                  <span style={{ color: "#4ade80" }}>
+                    {" "}
+                    +{" "}
+                    {(
+                      Math.ceil(
+                        parseFloat(formatEther(userState.yieldRewards)) * 100
+                      ) / 100
+                    ).toFixed(2)}{" "}
+                    PAS
+                  </span>
+                )}
+              </>
+            ) : (
+              "0 PAS"
+            )}
           </div>
         </div>
       </div>

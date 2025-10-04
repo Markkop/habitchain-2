@@ -1,0 +1,34 @@
+{
+  "_format": "hh-resolc-artifact-1",
+  "contractName": "IComptroller",
+  "sourceName": "contracts/adapters/MoonwellAdapter.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint8",
+          "name": "rewardType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "address",
+          "name": "holder",
+          "type": "address"
+        },
+        {
+          "internalType": "address[]",
+          "name": "mTokens",
+          "type": "address[]"
+        }
+      ],
+      "name": "claimReward",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

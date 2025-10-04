@@ -22,3 +22,25 @@ export function Tooltip({ text, iconSize = 12 }: TooltipProps) {
     </span>
   );
 }
+
+interface TooltipWrapperProps {
+  text: string | ReactNode;
+  children: ReactNode;
+}
+
+export function TooltipWrapper({ text, children }: TooltipWrapperProps) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  return (
+    <span className="tooltip-wrapper">
+      <span
+        className="tooltip-icon"
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => setIsVisible(false)}
+      >
+        {children}
+      </span>
+      {isVisible && <span className="tooltip-content">{text}</span>}
+    </span>
+  );
+}

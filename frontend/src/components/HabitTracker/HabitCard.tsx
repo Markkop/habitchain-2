@@ -83,7 +83,7 @@ export function HabitCard({
                 )}
               </div>
               <div className="habit-meta">
-                ID: {habit?.id} | Epoch {habit?.createdAtEpoch.toString()}
+                Created: Epoch {habit?.createdAtEpoch.toString()}
               </div>
             </>
           )}

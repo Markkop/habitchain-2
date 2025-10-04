@@ -1,3 +1,5 @@
 {
-  "HabitTrackerModule#HabitTracker": "0xDA33f6936dcb89D38F2FEc3DC4a6aa1C2648599A"
+  "HabitTrackerModule#HabitTracker": "0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972",
+  "MockStakingRewardsModule#MockStakingRewards": "0x554d6e4Df553FBa38A5Fadb863a3D77dBd9975d0",
+  "HabitSettlerModule#HabitSettler": "0x7689B05aE9bf0463371869048A2d553BF331F340"
 }

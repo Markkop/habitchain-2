@@ -1,0 +1,171 @@
+{
+  "_format": "hh-resolc-artifact-1",
+  "contractName": "IHabitTracker",
+  "sourceName": "contracts/HabitSettler.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "epochNow",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint64",
+          "name": "epoch",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint32",
+          "name": "habitId",
+          "type": "uint32"
+        }
+      ],
+      "name": "forceSettle",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint64",
+          "name": "epoch",
+          "type": "uint64"
+        }
+      ],
+      "name": "funded",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint32",
+          "name": "habitId",
+          "type": "uint32"
+        }
+      ],
+      "name": "habits",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "text",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint64",
+          "name": "createdAtEpoch",
+          "type": "uint64"
+        },
+        {
+          "internalType": "bool",
+          "name": "archived",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint64",
+          "name": "epoch",
+          "type": "uint64"
+        },
+        {
+          "internalType": "uint32",
+          "name": "habitId",
+          "type": "uint32"
+        }
+      ],
+      "name": "settle",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "uint64",
+          "name": "epoch",
+          "type": "uint64"
+        }
+      ],
+      "name": "settled",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "userHabitCounters",
+      "outputs": [
+        {
+          "internalType": "uint32",
+          "name": "",
+          "type": "uint32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
