@@ -6,8 +6,8 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   // Set base path for GitHub Pages deployment
-  // Change 'habitchain-2' to your repository name if different
-  base: process.env.GITHUB_ACTIONS ? '/habitchain-2/' : '/',
+  // Use '/' for local dev, '/habitchain-2/' for production build
+  base: process.env.NODE_ENV === 'production' ? '/habitchain-2/' : '/',
   // alias are only to be added when absolutely necessary, these modules are already present in the browser environment
   // resolve: {
   // alias: {
