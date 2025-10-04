@@ -1,0 +1,138 @@
+/**
+ * HabitChain Color Palette
+ * 
+ * Extracted from the HabitChain logo:
+ * - Hot Pink/Magenta: Brand primary, backgrounds, accents
+ * - Deep Purple: Secondary brand color, UI elements
+ * - Bright Green: Success states, positive actions, brand accent
+ * - White: Text on dark backgrounds, clean surfaces
+ * 
+ * Usage: Import this file in your main CSS or reference these CSS variables
+ * To change the color scheme, simply update the values below.
+ */
+
+:root {
+  /* Brand Colors (from logo) */
+  --brand-pink: #fc298d; /* Main background pink */
+  --brand-pink-light: #fe50ae; /* Detail circles - lighter pink */
+  --brand-purple: #6d0f9b; /* Circular elements */
+  --brand-green: #00cb77; /* Center "hc" text */
+  --brand-white: #ffffff;
+
+  /* Primary Theme Colors */
+  --primary-color: var(--brand-green);
+  --primary-hover: var(--brand-pink-light);
+  --secondary-color: var(--brand-purple);
+  --secondary-hover: #8a1fc4;
+  --accent-color: var(--brand-pink);
+  --accent-hover: var(--brand-pink-light);
+
+  /* Background Colors - Using brand colors */
+  --bg-color: #1a0831; /* Dark purple with pink undertones */
+  --bg-light: #2d1048; /* Lighter purple */
+  --bg-hover: #3d1860; /* Even lighter purple for hover */
+  --bg-card: #251040; /* Card background */
+
+  /* Border Colors - Using brand purple */
+  --border-color: #6d0f9b66; /* Brand purple with transparency */
+  --border-hover: #fe50ae99; /* Brand pink-light on hover */
+  --border-accent: #fc298d80; /* Brand pink border */
+
+  /* Text Colors */
+  --text-color: var(--brand-white);
+  --text-muted: #c8a4e0; /* Light purple with pink tint */
+  --text-accent: var(--brand-pink-light);
+
+  /* Status Colors */
+  --success-color: var(--brand-green);
+  --success-bg: #00cb771a;
+  --success-border: #00cb774d;
+
+  --error-color: #ff3366;
+  --error-bg: #ff33661a;
+  --error-border: #ff33664d;
+
+  --warning-color: #ffb800;
+  --warning-bg: #ffb8001a;
+  --warning-border: #ffb8004d;
+
+  --info-color: var(--brand-purple);
+  --info-bg: #6d0f9b1a;
+  --info-border: #6d0f9b4d;
+
+  /* UI Elements */
+  --radius: 8px;
+  --shadow-sm: 0 2px 4px #fc298d26;
+  --shadow-md: 0 4px 12px #fc298d40;
+  --shadow-lg: 0 8px 24px #fc298d59;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--brand-purple) 0%,
+    var(--brand-pink) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--brand-green) 0%,
+    var(--brand-purple) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--brand-pink) 0%,
+    var(--brand-purple) 50%,
+    var(--brand-green) 100%
+  );
+
+  /* Font */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* Light mode colors using brand palette */
+[data-theme="light"] {
+  /* Background Colors - Light with brand color tints */
+  --bg-color: #ffffff;
+  --bg-light: #fef5fb; /* Very light pink tint */
+  --bg-hover: #fde9f7; /* Slightly more pink on hover */
+  --bg-card: #fcf0f8; /* Card with pink tint */
+
+  /* Border Colors - Using brand colors */
+  --border-color: #6d0f9b33; /* Purple with transparency */
+  --border-hover: #fc298d80; /* Pink on hover */
+  --border-accent: #fe50ae66; /* Light pink accent */
+
+  /* Text Colors - Dark for readability */
+  --text-color: #1a0831; /* Dark purple (same as dark mode bg-color) */
+  --text-muted: #6d0f9b99; /* Brand purple muted */
+  --text-accent: #fc298d; /* Brand pink for accents */
+
+  /* Primary/Secondary stay the same as they're brand colors */
+  /* But we can adjust hover states for better light mode contrast */
+  --primary-hover: #00a862; /* Slightly darker green */
+  --secondary-hover: #8a1fc4; /* Lighter purple */
+  --accent-hover: #fe50ae; /* Light pink */
+
+  /* Status Colors - Same as dark mode, they work well */
+  --success-color: #00cb77;
+  --success-bg: #00cb771a;
+  --success-border: #00cb774d;
+
+  --error-color: #ff3366;
+  --error-bg: #ff33661a;
+  --error-border: #ff33664d;
+
+  --warning-color: #ffb800;
+  --warning-bg: #ffb8001a;
+  --warning-border: #ffb8004d;
+
+  --info-color: #6d0f9b;
+  --info-bg: #6d0f9b1a;
+  --info-border: #6d0f9b4d;
+
+  /* Shadows - Lighter shadows for light mode */
+  --shadow-sm: 0 2px 4px #fc298d1a;
+  --shadow-md: 0 4px 12px #fc298d26;
+  --shadow-lg: 0 8px 24px #fc298d33;
+}

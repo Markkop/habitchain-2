@@ -14,6 +14,7 @@ import { Toaster } from "sonner";
 import { useState, useEffect } from "react";
 import { CopyButton } from "./components/CopyButton";
 import { ExternalLink } from "lucide-react";
+import { ThemeCustomizer } from "./components/ThemeCustomizer";
 
 function App() {
   const {
@@ -237,10 +238,18 @@ function App() {
               )}
             </>
           )}
+          <ThemeCustomizer inline />
         </div>
       </div>
 
-      <h1 className="title">HabitChain</h1>
+      <div className="title-container">
+        <img
+          src="/habitchain-logo.png"
+          alt="HabitChain Logo"
+          className="title-logo"
+        />
+        <h1 className="title">HabitChain</h1>
+      </div>
 
       {/* Main content - HabitTracker always visible */}
       <HabitTracker isConnected={isConnected} onConnect={handleConnect} />
