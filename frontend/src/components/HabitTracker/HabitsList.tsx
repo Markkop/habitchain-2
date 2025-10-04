@@ -169,7 +169,7 @@ export function HabitsList({
 
   return (
     <div className="section-card">
-      <h3>📋 Your Habits</h3>
+      <h3>Your Habits</h3>
       <div className="habits-list">
         {/* Creation card - always shown first */}
         <HabitCard

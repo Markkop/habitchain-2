@@ -2,11 +2,7 @@ import { useState, useEffect } from "react";
 import { themePresets, ThemePreset } from "../config/themePresets";
 import { X, Palette, RotateCcw } from "lucide-react";
 
-interface ThemeCustomizerProps {
-  inline?: boolean;
-}
-
-export function ThemeCustomizer({ inline = false }: ThemeCustomizerProps) {
+export function ThemeCustomizer() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentPreset, setCurrentPreset] = useState<ThemePreset>(
     themePresets[0]
@@ -128,14 +124,14 @@ export function ThemeCustomizer({ inline = false }: ThemeCustomizerProps) {
 
   return (
     <>
-      {/* Theme Button - Inline or Floating */}
+      {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={inline ? "theme-customizer-inline" : "theme-customizer-fab"}
+        className="theme-customizer-fab"
         title="Customize Theme"
         aria-label="Open theme customizer"
       >
-        <Palette size={inline ? 18 : 24} />
+        <Palette size={24} />
       </button>
 
       {/* Customizer Panel */}
@@ -189,27 +185,31 @@ export function ThemeCustomizer({ inline = false }: ThemeCustomizerProps) {
                         currentPreset.id === preset.id ? "active" : ""
                       }`}
                     >
-                      <div className="theme-preset-colors">
-                        <div
-                          className="theme-preset-color"
-                          style={{ backgroundColor: preset.colors.brandPink }}
-                        />
-                        <div
-                          className="theme-preset-color"
-                          style={{
-                            backgroundColor: preset.colors.brandPinkLight,
-                          }}
-                        />
-                        <div
-                          className="theme-preset-color"
-                          style={{ backgroundColor: preset.colors.brandPurple }}
-                        />
-                        <div
-                          className="theme-preset-color"
-                          style={{ backgroundColor: preset.colors.brandGreen }}
-                        />
-                      </div>
                       <div className="theme-preset-info">
+                        <div className="theme-preset-colors">
+                          <div
+                            className="theme-preset-color"
+                            style={{ backgroundColor: preset.colors.brandPink }}
+                          />
+                          <div
+                            className="theme-preset-color"
+                            style={{
+                              backgroundColor: preset.colors.brandPinkLight,
+                            }}
+                          />
+                          <div
+                            className="theme-preset-color"
+                            style={{
+                              backgroundColor: preset.colors.brandPurple,
+                            }}
+                          />
+                          <div
+                            className="theme-preset-color"
+                            style={{
+                              backgroundColor: preset.colors.brandGreen,
+                            }}
+                          />
+                        </div>
                         <div className="theme-preset-name">{preset.name}</div>
                         <div className="theme-preset-desc">
                           {preset.description}
