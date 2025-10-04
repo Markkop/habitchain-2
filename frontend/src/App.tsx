@@ -255,11 +255,7 @@ function App() {
           )}
           <button
             onClick={() =>
-              navigate(
-                location.pathname.includes("/test")
-                  ? `${import.meta.env.BASE_URL}`
-                  : `${import.meta.env.BASE_URL}test`
-              )
+              navigate(location.pathname.includes("/test") ? "/" : "/test")
             }
             className="btn-compact"
             title={

@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     {/* // IMP START - Setup Wagmi Provider */}
     <QueryClientProvider client={queryClient}>
       <WagmiProvider config={wagmiConfig}>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <App />
         </BrowserRouter>
       </WagmiProvider>
