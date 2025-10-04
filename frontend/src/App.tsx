@@ -244,7 +244,7 @@ function App() {
 
       <div className="title-container">
         <img
-          src="/habitchain-logo.png"
+          src={`${import.meta.env.BASE_URL}habitchain-logo.png`}
           alt="HabitChain Logo"
           className="title-logo"
         />
