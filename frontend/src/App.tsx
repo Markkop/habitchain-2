@@ -113,7 +113,16 @@ function App() {
   };
 
   const handleSetupTestnet = async () => {
-    await setupPolkadotTestnet();
+    const success = await setupPolkadotTestnet();
+
+    // After successful network setup/switch, trigger wallet connection
+    if (success && !isConnected) {
+      console.log("🔗 Network setup successful, connecting wallet...");
+      // Small delay to ensure network is ready
+      setTimeout(() => {
+        handleConnect();
+      }, 500);
+    }
   };
 
   return (

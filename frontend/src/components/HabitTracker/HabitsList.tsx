@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { logTransaction, logTxStatus } from "../../utils/logger";
 import { textToBytes32 } from "../../utils/habitHelpers";
-import { setupPolkadotTestnet } from "../../utils/networkSetup";
 import type { Habit, DailyStatus } from "../../types/habit";
 import { HabitCard } from "./HabitCard";
 
@@ -89,7 +88,7 @@ export function HabitsList({
 
   const handleCreateHabit = async () => {
     if (!isConnected) {
-      await setupPolkadotTestnet();
+      onConnect();
       return;
     }
     if (!habitText) return;
