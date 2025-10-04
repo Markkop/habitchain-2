@@ -12,6 +12,8 @@ import { logConnection } from "./utils/logger";
 import { setupPolkadotTestnet } from "./utils/networkSetup";
 import { Toaster } from "sonner";
 import { useState, useEffect } from "react";
+import { CopyButton } from "./components/CopyButton";
+import { ExternalLink } from "lucide-react";
 
 function App() {
   const {
@@ -128,68 +130,111 @@ function App() {
   return (
     <div className="container">
       <Toaster position="top-right" richColors expand={false} />
-      <h1 className="title">HabitChain</h1>
 
-      {/* Stats bar at the top */}
-      <div className="stats-bar">
-        <div className="stat-item">
-          <span className="stat-label">Wallet</span>
-          <span className="stat-value">
-            {isConnected && address
-              ? `${address.slice(0, 6)}...${address.slice(-4)}`
-              : "Not Connected"}
-          </span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-label">Network</span>
-          <span className="stat-value">
-            {chainId === passetHub.id ? "Passet Hub" : `Chain ${chainId}`}
-          </span>
-        </div>
-      </div>
-
-      {/* Action buttons */}
-      <div className="action-buttons">
-        {!isConnected ? (
-          <>
-            <button
-              onClick={handleConnect}
-              className="btn-primary"
-              disabled={!providerReady || connectLoading || providerLoading}
-            >
-              {providerLoading
-                ? "Initializing..."
-                : connectLoading
-                  ? "Connecting..."
-                  : "Connect Wallet"}
-            </button>
-            <button onClick={handleSetupTestnet} className="btn-secondary">
-              Setup Wallet Testnet
-            </button>
-          </>
-        ) : (
-          <>
-            <button onClick={handleFaucetClick} className="btn-secondary">
-              Get Test Tokens
-            </button>
-            <button
-              onClick={() => {
-                console.log("🔌 Disconnecting wallet...");
-                disconnect();
-              }}
-              className="btn-secondary"
-              disabled={disconnectLoading}
-            >
-              {disconnectLoading ? "Disconnecting..." : "Disconnect"}
-            </button>
-            {chainId !== passetHub.id && (
-              <button onClick={handleSetupTestnet} className="btn-secondary">
-                Switch to Testnet
-              </button>
+      {/* Wallet and Network bar - compact, above title */}
+      <div className="wallet-network-bar">
+        <div className="wallet-network-left">
+          <div className="wallet-network-item">
+            <span className="wallet-network-label">Wallet:</span>
+            <span className="wallet-network-value">
+              {isConnected && address
+                ? `${address.slice(0, 6)}...${address.slice(-4)}`
+                : "Not Connected"}
+            </span>
+            {isConnected && address && (
+              <CopyButton
+                textToCopy={address}
+                label="Wallet address"
+                size={11}
+              />
             )}
-          </>
-        )}
+          </div>
+          <div className="wallet-network-divider">•</div>
+          <div className="wallet-network-item">
+            <span className="wallet-network-label">Network:</span>
+            <span className="wallet-network-value">
+              {chainId === passetHub.id ? "Passet Hub" : `Chain ${chainId}`}
+            </span>
+          </div>
+          {chainId === passetHub.id &&
+            habitTrackerAddress[
+              chainId as keyof typeof habitTrackerAddress
+            ] && (
+              <>
+                <div className="wallet-network-divider">•</div>
+                <div className="wallet-network-item">
+                  <span className="wallet-network-label">HabitTracker:</span>
+                  <span className="wallet-network-value">
+                    {`${habitTrackerAddress[chainId as keyof typeof habitTrackerAddress].slice(0, 6)}...${habitTrackerAddress[chainId as keyof typeof habitTrackerAddress].slice(-4)}`}
+                  </span>
+                  <CopyButton
+                    textToCopy={
+                      habitTrackerAddress[
+                        chainId as keyof typeof habitTrackerAddress
+                      ]
+                    }
+                    label="Contract address"
+                    size={11}
+                  />
+                  <a
+                    href={`${passetHub.blockExplorers.default.url}/address/${habitTrackerAddress[chainId as keyof typeof habitTrackerAddress]}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="icon-btn-inline"
+                    title="View on block explorer"
+                  >
+                    <ExternalLink size={11} />
+                  </a>
+                </div>
+              </>
+            )}
+        </div>
+
+        {/* Compact action buttons on the right */}
+        <div className="wallet-network-actions">
+          {!isConnected ? (
+            <>
+              <button
+                onClick={handleConnect}
+                className="btn-compact btn-compact-primary"
+                disabled={!providerReady || connectLoading || providerLoading}
+              >
+                {providerLoading
+                  ? "Initializing..."
+                  : connectLoading
+                    ? "Connecting..."
+                    : "Connect"}
+              </button>
+              <button onClick={handleSetupTestnet} className="btn-compact">
+                Setup
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={handleFaucetClick} className="btn-compact">
+                Get Tokens
+              </button>
+              <button
+                onClick={() => {
+                  console.log("🔌 Disconnecting wallet...");
+                  disconnect();
+                }}
+                className="btn-compact"
+                disabled={disconnectLoading}
+              >
+                {disconnectLoading ? "..." : "Disconnect"}
+              </button>
+              {chainId !== passetHub.id && (
+                <button onClick={handleSetupTestnet} className="btn-compact">
+                  Switch
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </div>
+
+      <h1 className="title">HabitChain</h1>
 
       {/* Main content - HabitTracker always visible */}
       <HabitTracker isConnected={isConnected} onConnect={handleConnect} />
