@@ -1,15 +1,33 @@
 # HabitChain (Polkadot EVM)
 
-HabitChain is a dApp designed to encourage the formation of daily habits through the use of crypto.
+HabitChain is a Polkadot‑based dApp that turns self‑discipline into a financial commitment.  
 
-Users can stake crypto on their habits and either withdraw it if they succeed or lose it if they fail.
-While the tokens are staked in the protocol/dApp, they can generate yield (yield farming), increasing the incentives.
-If a habit is failed, the staked amount is transferred to the protocol’s treasury. If the user is in a group, the amount is split among the other group members who did not fail their habits on the same day.
-It addresses the lack of motivation and instant rewards for users who want to use cryptocurrency to build daily habits.
+Users lock funds on their own habit, complete daily check‑ins, and—if successful—reclaim their stake plus yield.  
+If they fail, the locked fund is slashed to the protocol treasury (or, in groups, redistributed to successful peers).  
+  
+The prototype proves one essential on‑chain action: **commit → check‑in → settle** on the Paseo testnet via an EVM smart contract.  
+  
+By adding real consequences and immediate feedback, HabitChain closes the “motivation gap”, aligning personal progress with tangible rewards.  
 
-https://markkop.github.io/habitchain-2/
 
-(Demo not ready yet)
+## Details
+
+- Network: Paseo — Polkadot Hub Testnet (Passet Hub EVM)
+- Address: [0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972](https://blockscout-passet-hub.parity-testnet.parity.io/address/0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972)
+- ABI: [https://github.com/Markkop/habitchain-2/blob/5796cec97438a4a9e4a692102478c35a4d712931/frontend/src/generated.ts#L102](https://github.com/Markkop/habitchain-2/blob/5796cec97438a4a9e4a692102478c35a4d712931/frontend/src/generated.ts#L102)
+
+## Testing Instructions
+
+1. Go to https://markkop.github.io/habitchain-2/
+2. Setup/connect wallet (see [Connecting to Polkadot](https://docs.polkadot.com/develop/smart-contracts/connect-to-polkadot/))
+3. Deposit funds
+4. Create two habits
+5. Fund habits (It costs 10 PAS each)
+6. Check-in one habit, but don't do the other
+7. Force settle to avoid needing to wait until 00:00 UTC
+8. Notice you know have 10 PAS as rewards from the checked-in habit and see some extra yield
+
+Note: you might need to refresh the page in between some steps if the UI don't update
 
 ## Technology Stack
 
