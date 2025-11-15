@@ -15,7 +15,7 @@ permissions:
 
 # Prevent concurrent deployments
 concurrency:
-  group: "pages"
+  group: "deployment"
   cancel-in-progress: false
 
 jobs:
