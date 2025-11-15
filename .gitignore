@@ -99,6 +99,9 @@ next-env.d.ts
 .yarn/install-state.gz
 .pnp.*
 
+# Pnpm
+.pnp.caches/
+
 # Misc
 .turbo
 *.local
