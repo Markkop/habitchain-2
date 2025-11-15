@@ -354,18 +354,18 @@ function App() {
         <p className="footer-text footer-separator">|</p>
         <div className="footer-hackathon">
           <p className="footer-text">
-            For the <span className="footer-highlight">Latin Hack</span>{" "}
+            For the <span className="footer-highlight">Sub0 Hack</span>{" "}
             hackathon
           </p>
           <a
-            href="https://latinhack.io/"
+            href="https://hack.sub0.gg/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Visit Latin Hack"
+            title="Visit Sub0 Hack"
           >
             <img
-              src="https://latinhack.io/logo.png"
-              alt="Latin Hack"
+              src={`${import.meta.env.BASE_URL}sub0.png`}
+              alt="Sub0 Hack"
               className="hackathon-logo"
             />
           </a>
