@@ -404,3 +404,5 @@ When deployment fails:
 ---
 
 **Remember:** Use kitdot for project initialization. It handles network configuration, dependency management, and provides battle-tested templates. Alternative tools available but kitdot ensures proper setup.
+
+Note: the content of this context might change. Try to keep it up to date.

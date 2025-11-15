@@ -54,8 +54,6 @@ This project was bootstraped with [kitdot](https://github.com/w3b3d3v/kitdot/) a
 - [Polkadot Hardhat](https://docs.polkadot.com/develop/smart-contracts/dev-environments/hardhat/)
 - [@parity/hardhat-polkadot](https://github.com/paritytech/hardhat-polkadot)
 - [Native Smart Contracts](https://docs.polkadot.com/develop/smart-contracts/overview/#native-smart-contracts)
-- [LatinHack 2025](https://luma.com/latinhack)
-- [NERDCONF Discord](https://discord.gg/37Fp3wrqYm)
 
 ## Development Setup Instructions
 
