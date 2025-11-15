@@ -2453,6 +2453,240 @@ button,
   pointer-events: none;
 }
 
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+/* Deposit Modal */
+.deposit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.deposit-modal {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+.deposit-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.deposit-modal-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.deposit-modal-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.deposit-modal-close:hover {
+  background-color: var(--bg-hover);
+  color: var(--error-color);
+}
+
+.deposit-modal-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.deposit-balance-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+}
+
+.deposit-balance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.deposit-balance-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.deposit-balance-value {
+  font-size: 13px;
+  color: var(--text-color);
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.deposit-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+}
+
+.deposit-modal-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 600;
+  font-family: monospace;
+  padding: 0;
+  min-width: 0;
+}
+
+.deposit-modal-input:focus {
+  outline: none;
+}
+
+.deposit-modal-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.deposit-modal-currency {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.deposit-quick-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.deposit-quick-btn {
+  padding: 8px 12px;
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 0;
+}
+
+.deposit-quick-btn:hover:not(:disabled) {
+  background-color: var(--bg-hover);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.deposit-quick-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.deposit-modal-submit {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.deposit-modal-submit:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.deposit-modal-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.deposit-modal-submit .spinning {
+  animation: spin 1s linear infinite;
+}
+
+/* Mobile responsive for deposit modal */
+@media (max-width: 640px) {
+  .deposit-modal {
+    max-width: calc(100vw - 40px);
+  }
+
+  .deposit-modal-header {
+    padding: 12px 16px;
+  }
+
+  .deposit-modal-header h3 {
+    font-size: 14px;
+  }
+
+  .deposit-modal-content {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .deposit-modal-input {
+    font-size: 16px;
+  }
+
+  .deposit-quick-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .deposit-quick-btn {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+}
+
 /* Tooltip styles */
 .tooltip-wrapper {
   position: relative;

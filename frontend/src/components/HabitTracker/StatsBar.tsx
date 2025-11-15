@@ -35,8 +35,8 @@ export function StatsBar({
 }: StatsBarProps) {
   const { address } = useAccount();
   const chainId = useChainId();
-  const [showDepositInput, setShowDepositInput] = useState(false);
-  const [depositAmount, setDepositAmount] = useState("");
+  const [showDepositModal, setShowDepositModal] = useState(false);
+  const [depositAmount, setDepositAmount] = useState("100");
   const [showSuccessCheck, setShowSuccessCheck] = useState(false);
   const [depositError, setDepositError] = useState<string | null>(null);
   const [withdrawError, setWithdrawError] = useState<string | null>(null);
@@ -116,8 +116,8 @@ export function StatsBar({
         depositToastId
       );
       setShowSuccessCheck(true);
-      setDepositAmount("");
-      setShowDepositInput(false);
+      setDepositAmount("100");
+      setShowDepositModal(false);
       setDepositToastId(undefined);
       setDepositError(null);
       onSuccess();
@@ -272,7 +272,17 @@ export function StatsBar({
       await setupPolkadotTestnet();
       return;
     }
-    setShowDepositInput(true);
+    setDepositAmount("100");
+    setShowDepositModal(true);
+  };
+
+  const handleAddAmount = (amount: number) => {
+    const current = parseFloat(depositAmount) || 0;
+    setDepositAmount(String(current + amount));
+  };
+
+  const handleSetAmount = (amount: number) => {
+    setDepositAmount(String(amount));
   };
 
   const handleClaimYield = () => {
@@ -369,16 +379,14 @@ export function StatsBar({
             <div className="stat-label-with-actions">
               <span className="stat-label">DEPOSIT</span>
               <div className="stat-inline-actions">
-                {!showDepositInput && (
-                  <TooltipWrapper text="Add">
-                    <span
-                      className="icon-small deposit-icon"
-                      onClick={handleDepositClick}
-                    >
-                      <Plus size={12} />
-                    </span>
-                  </TooltipWrapper>
-                )}
+                <TooltipWrapper text="Add">
+                  <span
+                    className="icon-small deposit-icon"
+                    onClick={handleDepositClick}
+                  >
+                    <Plus size={12} />
+                  </span>
+                </TooltipWrapper>
                 {isConnected && userState && userState.depositBalance > 0n && (
                   <TooltipWrapper text="Withdraw All">
                     <span
@@ -399,72 +407,21 @@ export function StatsBar({
                 )}
               </div>
             </div>
-            {showDepositInput && isConnected ? (
-              <div className="deposit-inline">
-                <input
-                  type="number"
-                  className="deposit-input-small"
-                  value={depositAmount}
-                  onChange={(e) => setDepositAmount(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (
-                      e.key === "Enter" &&
-                      depositAmount &&
-                      !isDepositPending
-                    ) {
-                      e.preventDefault();
-                      handleDeposit();
-                    } else if (e.key === "Escape" && !isDepositPending) {
-                      e.preventDefault();
-                      setShowDepositInput(false);
-                      setDepositAmount("");
-                    }
-                  }}
-                  disabled={isDepositPending}
-                  maxLength={5}
-                  autoFocus
-                />
-                <button
-                  className={`icon-button add-button ${isDepositPending ? "spinning" : ""}`}
-                  onClick={handleDeposit}
-                  disabled={isDepositPending || !depositAmount}
+            <div className="stat-value-with-check">
+              <span className="stat-value">
+                {isConnected && userState
+                  ? `${Number(formatEther(userState.depositBalance)).toFixed(2)} PAS`
+                  : "0.00 PAS"}
+              </span>
+              {showSuccessCheck && (
+                <span
+                  className="success-check"
+                  onClick={() => setShowSuccessCheck(false)}
                 >
-                  <span>
-                    {isDepositPending ? (
-                      <Loader2 size={14} />
-                    ) : (
-                      <Plus size={14} />
-                    )}
-                  </span>
-                </button>
-                <button
-                  className="icon-button cancel-button"
-                  onClick={() => {
-                    setShowDepositInput(false);
-                    setDepositAmount("");
-                  }}
-                  disabled={isDepositPending}
-                >
-                  <X size={14} />
-                </button>
-              </div>
-            ) : (
-              <div className="stat-value-with-check">
-                <span className="stat-value">
-                  {isConnected && userState
-                    ? `${Number(formatEther(userState.depositBalance)).toFixed(2)} PAS`
-                    : "0.00 PAS"}
+                  <Check size={16} />
                 </span>
-                {showSuccessCheck && (
-                  <span
-                    className="success-check"
-                    onClick={() => setShowSuccessCheck(false)}
-                  >
-                    <Check size={16} />
-                  </span>
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
           {(depositError || withdrawError) && (
             <div
@@ -606,6 +563,119 @@ export function StatsBar({
       {userStateError && (
         <div className="error-banner">
           Error loading data: {userStateError.message}
+        </div>
+      )}
+
+      {/* Deposit Modal */}
+      {showDepositModal && isConnected && (
+        <div
+          className="deposit-modal-overlay"
+          onClick={() => setShowDepositModal(false)}
+        >
+          <div
+            className="deposit-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="deposit-modal-header">
+              <h3>Deposit Funds</h3>
+              <button
+                onClick={() => setShowDepositModal(false)}
+                className="deposit-modal-close"
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <div className="deposit-modal-content">
+              <div className="deposit-balance-info">
+                <div className="deposit-balance-row">
+                  <span className="deposit-balance-label">Wallet:</span>
+                  <span className="deposit-balance-value">
+                    {walletBalance
+                      ? `${Number(formatEther(walletBalance.value)).toFixed(2)} PAS`
+                      : "0.00 PAS"}
+                  </span>
+                </div>
+                <div className="deposit-balance-row">
+                  <span className="deposit-balance-label">Deposited:</span>
+                  <span className="deposit-balance-value">
+                    {userState
+                      ? `${Number(formatEther(userState.depositBalance)).toFixed(2)} PAS`
+                      : "0.00 PAS"}
+                  </span>
+                </div>
+              </div>
+              <div className="deposit-input-group">
+                <input
+                  type="number"
+                  className="deposit-modal-input"
+                  value={depositAmount}
+                  onChange={(e) => setDepositAmount(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (
+                      e.key === "Enter" &&
+                      depositAmount &&
+                      !isDepositPending
+                    ) {
+                      e.preventDefault();
+                      handleDeposit();
+                    } else if (e.key === "Escape") {
+                      e.preventDefault();
+                      setShowDepositModal(false);
+                    }
+                  }}
+                  disabled={isDepositPending}
+                  placeholder="100"
+                  autoFocus
+                />
+                <span className="deposit-modal-currency">PAS</span>
+              </div>
+              <div className="deposit-quick-buttons">
+                <button
+                  className="deposit-quick-btn"
+                  onClick={() => handleSetAmount(10)}
+                  disabled={isDepositPending}
+                >
+                  10
+                </button>
+                <button
+                  className="deposit-quick-btn"
+                  onClick={() => handleSetAmount(100)}
+                  disabled={isDepositPending}
+                >
+                  100
+                </button>
+                <button
+                  className="deposit-quick-btn"
+                  onClick={() => handleAddAmount(10)}
+                  disabled={isDepositPending}
+                >
+                  +10
+                </button>
+                <button
+                  className="deposit-quick-btn"
+                  onClick={() => handleAddAmount(-10)}
+                  disabled={isDepositPending}
+                >
+                  -10
+                </button>
+              </div>
+              <button
+                className="deposit-modal-submit"
+                onClick={handleDeposit}
+                disabled={isDepositPending || !depositAmount}
+              >
+                {isDepositPending ? (
+                  <>
+                    <Loader2 size={16} className="spinning" />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  "Deposit"
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>
