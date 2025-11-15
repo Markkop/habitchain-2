@@ -126,8 +126,8 @@ export function GroupsList({
   return (
     <div className="section-card">
       <h3>
-        Groups (mocked{" "}
-        <Tooltip text="UI only" />
+        Groups (preview{" "}
+        <Tooltip text="This is a mocked UI only preview of the groups feature" />
         )
       </h3>
       <div className="habits-list">
