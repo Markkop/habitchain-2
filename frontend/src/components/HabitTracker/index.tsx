@@ -4,6 +4,7 @@ import { useHabitData } from "../../hooks/useHabitData";
 import { StatsBar } from "./StatsBar";
 import { ActionCards } from "./ActionCards";
 import { HabitsList } from "./HabitsList";
+import { GroupsList } from "./GroupsList";
 
 interface HabitTrackerProps {
   isConnected: boolean;
@@ -90,6 +91,12 @@ export function HabitTracker({ isConnected, onConnect }: HabitTrackerProps) {
         habitStatuses={habitStatuses}
         currentEpoch={currentEpoch}
         onSuccess={handleRefetch}
+      />
+
+      <GroupsList
+        isConnected={isConnected}
+        onConnect={onConnect}
+        address={address}
       />
     </div>
   );
