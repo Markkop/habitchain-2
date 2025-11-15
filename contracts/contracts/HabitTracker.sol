@@ -21,7 +21,7 @@ import "./interfaces/IStakingAdapter.sol";
  */
 contract HabitTracker {
     uint256 public constant STAKE_PER_DAY = 10 ether;
-    uint256 private constant SECONDS_PER_DAY = 86400;
+    uint256 private constant SECONDS_PER_DAY = 60 * 60 * 24;
     address public immutable treasury;
     IStakingAdapter public stakingAdapter;
     address public owner;
