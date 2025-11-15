@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { CopyButton } from "./components/CopyButton";
 import { ExternalLink, Github } from "lucide-react";
 import { ThemeCustomizer } from "./components/ThemeCustomizer";
+import { SponsorshipDialog } from "./components/SponsorshipDialog";
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
   // Provider readiness states
   const [providerReady, setProviderReady] = useState(false);
   const [providerLoading, setProviderLoading] = useState(true);
+  const [showSponsorDialog, setShowSponsorDialog] = useState(false);
 
   // Track Web3Auth provider initialization
   useEffect(() => {
@@ -266,6 +268,13 @@ function App() {
           >
             {location.pathname.includes("/test") ? "Home" : "Test"}
           </button>
+          <button
+            onClick={() => setShowSponsorDialog(true)}
+            className="btn-compact"
+            title="Learn about sponsoring HabitChain"
+          >
+            Sponsor
+          </button>
           <ThemeCustomizer inline />
         </div>
       </div>
@@ -289,6 +298,12 @@ function App() {
         />
         <Route path="/test" element={<TestPage />} />
       </Routes>
+
+      {/* Sponsorship Dialog */}
+      <SponsorshipDialog
+        isOpen={showSponsorDialog}
+        onClose={() => setShowSponsorDialog(false)}
+      />
 
       {/* Footer */}
       <footer className="app-footer">

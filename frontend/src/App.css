@@ -2650,6 +2650,164 @@ button,
   cursor: not-allowed;
 }
 
+/* Sponsorship Modal */
+.sponsor-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.sponsor-modal {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 800px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+.sponsor-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.sponsor-modal-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.sponsor-modal-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.sponsor-modal-close:hover {
+  background-color: var(--bg-hover);
+  color: var(--error-color);
+}
+
+.sponsor-modal-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.sponsor-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sponsor-section h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.sponsor-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.sponsor-section ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sponsor-section li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.sponsor-section strong {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.sponsor-contact {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.sponsor-contact a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.sponsor-contact a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Mobile responsiveness for sponsorship modal */
+@media (max-width: 640px) {
+  .sponsor-modal {
+    max-width: 100%;
+    max-height: 90vh;
+    margin: 10px;
+  }
+
+  .sponsor-modal-header {
+    padding: 12px 16px;
+  }
+
+  .sponsor-modal-header h3 {
+    font-size: 16px;
+  }
+
+  .sponsor-modal-content {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .sponsor-section h4 {
+    font-size: 15px;
+  }
+
+  .sponsor-section p,
+  .sponsor-section li {
+    font-size: 14px;
+  }
+}
+
 .deposit-modal-submit .spinning {
   animation: spin 1s linear infinite;
 }
