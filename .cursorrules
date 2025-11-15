@@ -6,3 +6,4 @@
 - When coding a smart contract, check BYTECODE_OPTIMIZATION.md for best practices.
 - Don't write .md files unless asked to.
 - If updating a smart contract, in the end ask to deploy the contract with `npm run redeploy:all`
+- Remember to check if the frontend is working after updating a smart contract.
