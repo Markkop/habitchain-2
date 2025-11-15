@@ -46,8 +46,8 @@
       ]
     },
     "/Users/marcelokopmann1/workspace/habitchain-2/contracts/contracts/HabitTracker.sol": {
-      "lastModificationDate": 1759563505194,
-      "contentHash": "f0eddc49ed01d5b5c010a45ecdecadc1",
+      "lastModificationDate": 1763220668592,
+      "contentHash": "b156e18a91507c06afe4109c7e7cfac2",
       "sourceName": "contracts/HabitTracker.sol",
       "solcConfig": {
         "version": "0.8.28",

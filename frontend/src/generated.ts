@@ -81,7 +81,7 @@ export const habitSettlerAbi = [
  *
  */
 export const habitSettlerAddress = {
-  420420422: '0x7689B05aE9bf0463371869048A2d553BF331F340',
+  420420422: '0x4Ec071E3F329AFc3dC866Af30089Ed201Ad5fC97',
 } as const
 
 /**
@@ -491,7 +491,7 @@ export const habitTrackerAbi = [
  *
  */
 export const habitTrackerAddress = {
-  420420422: '0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972',
+  420420422: '0x021df1E1B082b667291433753541747907C28E33',
 } as const
 
 /**
@@ -870,7 +870,7 @@ export const mockStakingRewardsAbi = [
  *
  */
 export const mockStakingRewardsAddress = {
-  420420422: '0x554d6e4Df553FBa38A5Fadb863a3D77dBd9975d0',
+  420420422: '0x3506fE17674B11d316Aa3b1754455549863ab108',
 } as const
 
 /**
@@ -1046,10 +1046,10 @@ export const useReadHabitSettler = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitSettlerHabitTracker =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'habitTracker',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'habitTracker',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitSettlerAbi}__
@@ -1068,10 +1068,10 @@ export const useWriteHabitSettler = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitSettlerForceSettleAllEpochs =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'forceSettleAllEpochs',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'forceSettleAllEpochs',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitSettlerAbi}__ and `functionName` set to `"forceSettleDay"`
@@ -1080,10 +1080,10 @@ export const useWriteHabitSettlerForceSettleAllEpochs =
  */
 export const useWriteHabitSettlerForceSettleDay =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'forceSettleDay',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'forceSettleDay',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitSettlerAbi}__ and `functionName` set to `"settleAll"`
@@ -1092,10 +1092,10 @@ export const useWriteHabitSettlerForceSettleDay =
  */
 export const useWriteHabitSettlerSettleAll =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'settleAll',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'settleAll',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitSettlerAbi}__ and `functionName` set to `"settleBatch"`
@@ -1104,10 +1104,10 @@ export const useWriteHabitSettlerSettleAll =
  */
 export const useWriteHabitSettlerSettleBatch =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'settleBatch',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'settleBatch',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitSettlerAbi}__
@@ -1126,10 +1126,10 @@ export const useSimulateHabitSettler = /*#__PURE__*/ createUseSimulateContract({
  */
 export const useSimulateHabitSettlerForceSettleAllEpochs =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'forceSettleAllEpochs',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'forceSettleAllEpochs',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitSettlerAbi}__ and `functionName` set to `"forceSettleDay"`
@@ -1138,10 +1138,10 @@ export const useSimulateHabitSettlerForceSettleAllEpochs =
  */
 export const useSimulateHabitSettlerForceSettleDay =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'forceSettleDay',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'forceSettleDay',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitSettlerAbi}__ and `functionName` set to `"settleAll"`
@@ -1150,10 +1150,10 @@ export const useSimulateHabitSettlerForceSettleDay =
  */
 export const useSimulateHabitSettlerSettleAll =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'settleAll',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'settleAll',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitSettlerAbi}__ and `functionName` set to `"settleBatch"`
@@ -1162,10 +1162,10 @@ export const useSimulateHabitSettlerSettleAll =
  */
 export const useSimulateHabitSettlerSettleBatch =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitSettlerAbi,
-    address: habitSettlerAddress,
-    functionName: 'settleBatch',
-  })
+  abi: habitSettlerAbi,
+  address: habitSettlerAddress,
+  functionName: 'settleBatch',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -1184,10 +1184,10 @@ export const useReadHabitTracker = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerStakePerDay =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'STAKE_PER_DAY',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'STAKE_PER_DAY',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"checked"`
@@ -1262,10 +1262,10 @@ export const useReadHabitTrackerSettled = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerStakingAdapter =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'stakingAdapter',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'stakingAdapter',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"treasury"`
@@ -1285,10 +1285,10 @@ export const useReadHabitTrackerTreasury = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadHabitTrackerUserHabitCounters =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'userHabitCounters',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'userHabitCounters',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"userStates"`
@@ -1297,10 +1297,10 @@ export const useReadHabitTrackerUserHabitCounters =
  */
 export const useReadHabitTrackerUserStates =
   /*#__PURE__*/ createUseReadContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'userStates',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'userStates',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -1319,10 +1319,10 @@ export const useWriteHabitTracker = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitTrackerArchiveHabit =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'archiveHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'archiveHabit',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"checkIn"`
@@ -1344,10 +1344,10 @@ export const useWriteHabitTrackerCheckIn = /*#__PURE__*/ createUseWriteContract(
  */
 export const useWriteHabitTrackerClaimAll =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'claimAll',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'claimAll',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"claimYieldRewards"`
@@ -1356,10 +1356,10 @@ export const useWriteHabitTrackerClaimAll =
  */
 export const useWriteHabitTrackerClaimYieldRewards =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'claimYieldRewards',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'claimYieldRewards',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"createHabit"`
@@ -1368,10 +1368,10 @@ export const useWriteHabitTrackerClaimYieldRewards =
  */
 export const useWriteHabitTrackerCreateHabit =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'createHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'createHabit',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"deposit"`
@@ -1393,10 +1393,10 @@ export const useWriteHabitTrackerDeposit = /*#__PURE__*/ createUseWriteContract(
  */
 export const useWriteHabitTrackerForceSettle =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'forceSettle',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'forceSettle',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"move"`
@@ -1416,10 +1416,10 @@ export const useWriteHabitTrackerMove = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitTrackerPrepareDay =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'prepareDay',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'prepareDay',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"setStakingAdapter"`
@@ -1428,10 +1428,10 @@ export const useWriteHabitTrackerPrepareDay =
  */
 export const useWriteHabitTrackerSetStakingAdapter =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'setStakingAdapter',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'setStakingAdapter',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"settle"`
@@ -1451,10 +1451,10 @@ export const useWriteHabitTrackerSettle = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteHabitTrackerTransferOwnership =
   /*#__PURE__*/ createUseWriteContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'transferOwnership',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'transferOwnership',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -1473,10 +1473,10 @@ export const useSimulateHabitTracker = /*#__PURE__*/ createUseSimulateContract({
  */
 export const useSimulateHabitTrackerArchiveHabit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'archiveHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'archiveHabit',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"checkIn"`
@@ -1485,10 +1485,10 @@ export const useSimulateHabitTrackerArchiveHabit =
  */
 export const useSimulateHabitTrackerCheckIn =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'checkIn',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'checkIn',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"claimAll"`
@@ -1497,10 +1497,10 @@ export const useSimulateHabitTrackerCheckIn =
  */
 export const useSimulateHabitTrackerClaimAll =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'claimAll',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'claimAll',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"claimYieldRewards"`
@@ -1509,10 +1509,10 @@ export const useSimulateHabitTrackerClaimAll =
  */
 export const useSimulateHabitTrackerClaimYieldRewards =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'claimYieldRewards',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'claimYieldRewards',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"createHabit"`
@@ -1521,10 +1521,10 @@ export const useSimulateHabitTrackerClaimYieldRewards =
  */
 export const useSimulateHabitTrackerCreateHabit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'createHabit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'createHabit',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"deposit"`
@@ -1533,10 +1533,10 @@ export const useSimulateHabitTrackerCreateHabit =
  */
 export const useSimulateHabitTrackerDeposit =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'deposit',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'deposit',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"forceSettle"`
@@ -1545,10 +1545,10 @@ export const useSimulateHabitTrackerDeposit =
  */
 export const useSimulateHabitTrackerForceSettle =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'forceSettle',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'forceSettle',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"move"`
@@ -1557,10 +1557,10 @@ export const useSimulateHabitTrackerForceSettle =
  */
 export const useSimulateHabitTrackerMove =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'move',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'move',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"prepareDay"`
@@ -1569,10 +1569,10 @@ export const useSimulateHabitTrackerMove =
  */
 export const useSimulateHabitTrackerPrepareDay =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'prepareDay',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'prepareDay',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"setStakingAdapter"`
@@ -1581,10 +1581,10 @@ export const useSimulateHabitTrackerPrepareDay =
  */
 export const useSimulateHabitTrackerSetStakingAdapter =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'setStakingAdapter',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'setStakingAdapter',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"settle"`
@@ -1593,10 +1593,10 @@ export const useSimulateHabitTrackerSetStakingAdapter =
  */
 export const useSimulateHabitTrackerSettle =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'settle',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'settle',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link habitTrackerAbi}__ and `functionName` set to `"transferOwnership"`
@@ -1605,10 +1605,10 @@ export const useSimulateHabitTrackerSettle =
  */
 export const useSimulateHabitTrackerTransferOwnership =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    functionName: 'transferOwnership',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  functionName: 'transferOwnership',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__
@@ -1617,9 +1617,9 @@ export const useSimulateHabitTrackerTransferOwnership =
  */
 export const useWatchHabitTrackerEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"BalanceMoved"`
@@ -1628,10 +1628,10 @@ export const useWatchHabitTrackerEvent =
  */
 export const useWatchHabitTrackerBalanceMovedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'BalanceMoved',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'BalanceMoved',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"CheckedIn"`
@@ -1640,10 +1640,10 @@ export const useWatchHabitTrackerBalanceMovedEvent =
  */
 export const useWatchHabitTrackerCheckedInEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'CheckedIn',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'CheckedIn',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"DayPrepared"`
@@ -1652,10 +1652,10 @@ export const useWatchHabitTrackerCheckedInEvent =
  */
 export const useWatchHabitTrackerDayPreparedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'DayPrepared',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'DayPrepared',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"Deposited"`
@@ -1664,10 +1664,10 @@ export const useWatchHabitTrackerDayPreparedEvent =
  */
 export const useWatchHabitTrackerDepositedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'Deposited',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'Deposited',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"HabitArchived"`
@@ -1676,10 +1676,10 @@ export const useWatchHabitTrackerDepositedEvent =
  */
 export const useWatchHabitTrackerHabitArchivedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'HabitArchived',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'HabitArchived',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"HabitCreated"`
@@ -1688,10 +1688,10 @@ export const useWatchHabitTrackerHabitArchivedEvent =
  */
 export const useWatchHabitTrackerHabitCreatedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'HabitCreated',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'HabitCreated',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"SettledFail"`
@@ -1700,10 +1700,10 @@ export const useWatchHabitTrackerHabitCreatedEvent =
  */
 export const useWatchHabitTrackerSettledFailEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'SettledFail',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'SettledFail',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"SettledSuccess"`
@@ -1712,10 +1712,10 @@ export const useWatchHabitTrackerSettledFailEvent =
  */
 export const useWatchHabitTrackerSettledSuccessEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'SettledSuccess',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'SettledSuccess',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link habitTrackerAbi}__ and `eventName` set to `"StakingAdapterUpdated"`
@@ -1724,10 +1724,10 @@ export const useWatchHabitTrackerSettledSuccessEvent =
  */
 export const useWatchHabitTrackerStakingAdapterUpdatedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: habitTrackerAbi,
-    address: habitTrackerAddress,
-    eventName: 'StakingAdapterUpdated',
-  })
+  abi: habitTrackerAbi,
+  address: habitTrackerAddress,
+  eventName: 'StakingAdapterUpdated',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iComptrollerAbi}__
@@ -1741,9 +1741,9 @@ export const useWriteIComptroller = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteIComptrollerClaimReward =
   /*#__PURE__*/ createUseWriteContract({
-    abi: iComptrollerAbi,
-    functionName: 'claimReward',
-  })
+  abi: iComptrollerAbi,
+  functionName: 'claimReward',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iComptrollerAbi}__
@@ -1757,9 +1757,9 @@ export const useSimulateIComptroller = /*#__PURE__*/ createUseSimulateContract({
  */
 export const useSimulateIComptrollerClaimReward =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: iComptrollerAbi,
-    functionName: 'claimReward',
-  })
+  abi: iComptrollerAbi,
+  functionName: 'claimReward',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc20Abi}__
@@ -1818,9 +1818,9 @@ export const useSimulateIerc20Approve = /*#__PURE__*/ createUseSimulateContract(
  */
 export const useSimulateIerc20Transfer =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: ierc20Abi,
-    functionName: 'transfer',
-  })
+  abi: ierc20Abi,
+  functionName: 'transfer',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iHabitTrackerAbi}__
@@ -1865,9 +1865,9 @@ export const useReadIHabitTrackerSettled = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadIHabitTrackerUserHabitCounters =
   /*#__PURE__*/ createUseReadContract({
-    abi: iHabitTrackerAbi,
-    functionName: 'userHabitCounters',
-  })
+  abi: iHabitTrackerAbi,
+  functionName: 'userHabitCounters',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iHabitTrackerAbi}__
@@ -1881,9 +1881,9 @@ export const useWriteIHabitTracker = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteIHabitTrackerForceSettle =
   /*#__PURE__*/ createUseWriteContract({
-    abi: iHabitTrackerAbi,
-    functionName: 'forceSettle',
-  })
+  abi: iHabitTrackerAbi,
+  functionName: 'forceSettle',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iHabitTrackerAbi}__ and `functionName` set to `"settle"`
@@ -1904,18 +1904,18 @@ export const useSimulateIHabitTracker = /*#__PURE__*/ createUseSimulateContract(
  */
 export const useSimulateIHabitTrackerForceSettle =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: iHabitTrackerAbi,
-    functionName: 'forceSettle',
-  })
+  abi: iHabitTrackerAbi,
+  functionName: 'forceSettle',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iHabitTrackerAbi}__ and `functionName` set to `"settle"`
  */
 export const useSimulateIHabitTrackerSettle =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: iHabitTrackerAbi,
-    functionName: 'settle',
-  })
+  abi: iHabitTrackerAbi,
+  functionName: 'settle',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link imTokenNativeAbi}__
@@ -1929,18 +1929,18 @@ export const useReadImTokenNative = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadImTokenNativeBalanceOf =
   /*#__PURE__*/ createUseReadContract({
-    abi: imTokenNativeAbi,
-    functionName: 'balanceOf',
-  })
+  abi: imTokenNativeAbi,
+  functionName: 'balanceOf',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link imTokenNativeAbi}__ and `functionName` set to `"exchangeRateStored"`
  */
 export const useReadImTokenNativeExchangeRateStored =
   /*#__PURE__*/ createUseReadContract({
-    abi: imTokenNativeAbi,
-    functionName: 'exchangeRateStored',
-  })
+  abi: imTokenNativeAbi,
+  functionName: 'exchangeRateStored',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link imTokenNativeAbi}__
@@ -1969,9 +1969,9 @@ export const useWriteImTokenNativeRedeem = /*#__PURE__*/ createUseWriteContract(
  */
 export const useWriteImTokenNativeRedeemUnderlying =
   /*#__PURE__*/ createUseWriteContract({
-    abi: imTokenNativeAbi,
-    functionName: 'redeemUnderlying',
-  })
+  abi: imTokenNativeAbi,
+  functionName: 'redeemUnderlying',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link imTokenNativeAbi}__
@@ -1985,27 +1985,27 @@ export const useSimulateImTokenNative = /*#__PURE__*/ createUseSimulateContract(
  */
 export const useSimulateImTokenNativeMint =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: imTokenNativeAbi,
-    functionName: 'mint',
-  })
+  abi: imTokenNativeAbi,
+  functionName: 'mint',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link imTokenNativeAbi}__ and `functionName` set to `"redeem"`
  */
 export const useSimulateImTokenNativeRedeem =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: imTokenNativeAbi,
-    functionName: 'redeem',
-  })
+  abi: imTokenNativeAbi,
+  functionName: 'redeem',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link imTokenNativeAbi}__ and `functionName` set to `"redeemUnderlying"`
  */
 export const useSimulateImTokenNativeRedeemUnderlying =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: imTokenNativeAbi,
-    functionName: 'redeemUnderlying',
-  })
+  abi: imTokenNativeAbi,
+  functionName: 'redeemUnderlying',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iStakingAdapterAbi}__
@@ -2019,18 +2019,18 @@ export const useReadIStakingAdapter = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadIStakingAdapterGetPendingRewards =
   /*#__PURE__*/ createUseReadContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'getPendingRewards',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'getPendingRewards',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link iStakingAdapterAbi}__ and `functionName` set to `"getStakedAmount"`
  */
 export const useReadIStakingAdapterGetStakedAmount =
   /*#__PURE__*/ createUseReadContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'getStakedAmount',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'getStakedAmount',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAdapterAbi}__
@@ -2044,27 +2044,27 @@ export const useWriteIStakingAdapter = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteIStakingAdapterClaimRewards =
   /*#__PURE__*/ createUseWriteContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'claimRewards',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'claimRewards',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAdapterAbi}__ and `functionName` set to `"stake"`
  */
 export const useWriteIStakingAdapterStake =
   /*#__PURE__*/ createUseWriteContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'stake',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'stake',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iStakingAdapterAbi}__ and `functionName` set to `"unstake"`
  */
 export const useWriteIStakingAdapterUnstake =
   /*#__PURE__*/ createUseWriteContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'unstake',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'unstake',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAdapterAbi}__
@@ -2077,27 +2077,27 @@ export const useSimulateIStakingAdapter =
  */
 export const useSimulateIStakingAdapterClaimRewards =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'claimRewards',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'claimRewards',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAdapterAbi}__ and `functionName` set to `"stake"`
  */
 export const useSimulateIStakingAdapterStake =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'stake',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'stake',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iStakingAdapterAbi}__ and `functionName` set to `"unstake"`
  */
 export const useSimulateIStakingAdapterUnstake =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: iStakingAdapterAbi,
-    functionName: 'unstake',
-  })
+  abi: iStakingAdapterAbi,
+  functionName: 'unstake',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__
@@ -2116,10 +2116,10 @@ export const useReadMockStakingRewards = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadMockStakingRewardsDeposits =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'deposits',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'deposits',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"getContractBalance"`
@@ -2128,10 +2128,10 @@ export const useReadMockStakingRewardsDeposits =
  */
 export const useReadMockStakingRewardsGetContractBalance =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'getContractBalance',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'getContractBalance',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"getPendingRewards"`
@@ -2140,10 +2140,10 @@ export const useReadMockStakingRewardsGetContractBalance =
  */
 export const useReadMockStakingRewardsGetPendingRewards =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'getPendingRewards',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'getPendingRewards',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"getStakedAmount"`
@@ -2152,10 +2152,10 @@ export const useReadMockStakingRewardsGetPendingRewards =
  */
 export const useReadMockStakingRewardsGetStakedAmount =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'getStakedAmount',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'getStakedAmount',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"habitTracker"`
@@ -2164,10 +2164,10 @@ export const useReadMockStakingRewardsGetStakedAmount =
  */
 export const useReadMockStakingRewardsHabitTracker =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'habitTracker',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'habitTracker',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"lastUpdateTime"`
@@ -2176,10 +2176,10 @@ export const useReadMockStakingRewardsHabitTracker =
  */
 export const useReadMockStakingRewardsLastUpdateTime =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'lastUpdateTime',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'lastUpdateTime',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"ratePerSecond"`
@@ -2188,10 +2188,10 @@ export const useReadMockStakingRewardsLastUpdateTime =
  */
 export const useReadMockStakingRewardsRatePerSecond =
   /*#__PURE__*/ createUseReadContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'ratePerSecond',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'ratePerSecond',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__
@@ -2210,10 +2210,10 @@ export const useWriteMockStakingRewards = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteMockStakingRewardsClaimRewards =
   /*#__PURE__*/ createUseWriteContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'claimRewards',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'claimRewards',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"stake"`
@@ -2222,10 +2222,10 @@ export const useWriteMockStakingRewardsClaimRewards =
  */
 export const useWriteMockStakingRewardsStake =
   /*#__PURE__*/ createUseWriteContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'stake',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'stake',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"unstake"`
@@ -2234,10 +2234,10 @@ export const useWriteMockStakingRewardsStake =
  */
 export const useWriteMockStakingRewardsUnstake =
   /*#__PURE__*/ createUseWriteContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'unstake',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'unstake',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__
@@ -2246,9 +2246,9 @@ export const useWriteMockStakingRewardsUnstake =
  */
 export const useSimulateMockStakingRewards =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"claimRewards"`
@@ -2257,10 +2257,10 @@ export const useSimulateMockStakingRewards =
  */
 export const useSimulateMockStakingRewardsClaimRewards =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'claimRewards',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'claimRewards',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"stake"`
@@ -2269,10 +2269,10 @@ export const useSimulateMockStakingRewardsClaimRewards =
  */
 export const useSimulateMockStakingRewardsStake =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'stake',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'stake',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `functionName` set to `"unstake"`
@@ -2281,10 +2281,10 @@ export const useSimulateMockStakingRewardsStake =
  */
 export const useSimulateMockStakingRewardsUnstake =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    functionName: 'unstake',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  functionName: 'unstake',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockStakingRewardsAbi}__
@@ -2293,9 +2293,9 @@ export const useSimulateMockStakingRewardsUnstake =
  */
 export const useWatchMockStakingRewardsEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `eventName` set to `"RewardsClaimed"`
@@ -2304,10 +2304,10 @@ export const useWatchMockStakingRewardsEvent =
  */
 export const useWatchMockStakingRewardsRewardsClaimedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    eventName: 'RewardsClaimed',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  eventName: 'RewardsClaimed',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `eventName` set to `"Staked"`
@@ -2316,10 +2316,10 @@ export const useWatchMockStakingRewardsRewardsClaimedEvent =
  */
 export const useWatchMockStakingRewardsStakedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    eventName: 'Staked',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  eventName: 'Staked',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link mockStakingRewardsAbi}__ and `eventName` set to `"Unstaked"`
@@ -2328,10 +2328,10 @@ export const useWatchMockStakingRewardsStakedEvent =
  */
 export const useWatchMockStakingRewardsUnstakedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: mockStakingRewardsAbi,
-    address: mockStakingRewardsAddress,
-    eventName: 'Unstaked',
-  })
+  abi: mockStakingRewardsAbi,
+  address: mockStakingRewardsAddress,
+  eventName: 'Unstaked',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link moonwellAdapterAbi}__
@@ -2345,36 +2345,36 @@ export const useReadMoonwellAdapter = /*#__PURE__*/ createUseReadContract({
  */
 export const useReadMoonwellAdapterComptroller =
   /*#__PURE__*/ createUseReadContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'comptroller',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'comptroller',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"getPendingRewards"`
  */
 export const useReadMoonwellAdapterGetPendingRewards =
   /*#__PURE__*/ createUseReadContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'getPendingRewards',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'getPendingRewards',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"getStakedAmount"`
  */
 export const useReadMoonwellAdapterGetStakedAmount =
   /*#__PURE__*/ createUseReadContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'getStakedAmount',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'getStakedAmount',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"habitTracker"`
  */
 export const useReadMoonwellAdapterHabitTracker =
   /*#__PURE__*/ createUseReadContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'habitTracker',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'habitTracker',
+})
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"mToken"`
@@ -2388,9 +2388,9 @@ export const useReadMoonwellAdapterMToken = /*#__PURE__*/ createUseReadContract(
  */
 export const useReadMoonwellAdapterUserStakes =
   /*#__PURE__*/ createUseReadContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'userStakes',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'userStakes',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moonwellAdapterAbi}__
@@ -2404,27 +2404,27 @@ export const useWriteMoonwellAdapter = /*#__PURE__*/ createUseWriteContract({
  */
 export const useWriteMoonwellAdapterClaimRewards =
   /*#__PURE__*/ createUseWriteContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'claimRewards',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'claimRewards',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"stake"`
  */
 export const useWriteMoonwellAdapterStake =
   /*#__PURE__*/ createUseWriteContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'stake',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'stake',
+})
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"unstake"`
  */
 export const useWriteMoonwellAdapterUnstake =
   /*#__PURE__*/ createUseWriteContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'unstake',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'unstake',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moonwellAdapterAbi}__
@@ -2437,27 +2437,27 @@ export const useSimulateMoonwellAdapter =
  */
 export const useSimulateMoonwellAdapterClaimRewards =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'claimRewards',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'claimRewards',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"stake"`
  */
 export const useSimulateMoonwellAdapterStake =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'stake',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'stake',
+})
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `functionName` set to `"unstake"`
  */
 export const useSimulateMoonwellAdapterUnstake =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: moonwellAdapterAbi,
-    functionName: 'unstake',
-  })
+  abi: moonwellAdapterAbi,
+  functionName: 'unstake',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moonwellAdapterAbi}__
@@ -2470,24 +2470,24 @@ export const useWatchMoonwellAdapterEvent =
  */
 export const useWatchMoonwellAdapterRewardsClaimedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: moonwellAdapterAbi,
-    eventName: 'RewardsClaimed',
-  })
+  abi: moonwellAdapterAbi,
+  eventName: 'RewardsClaimed',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `eventName` set to `"Staked"`
  */
 export const useWatchMoonwellAdapterStakedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: moonwellAdapterAbi,
-    eventName: 'Staked',
-  })
+  abi: moonwellAdapterAbi,
+  eventName: 'Staked',
+})
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moonwellAdapterAbi}__ and `eventName` set to `"Unstaked"`
  */
 export const useWatchMoonwellAdapterUnstakedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: moonwellAdapterAbi,
-    eventName: 'Unstaked',
-  })
+  abi: moonwellAdapterAbi,
+  eventName: 'Unstaked',
+})

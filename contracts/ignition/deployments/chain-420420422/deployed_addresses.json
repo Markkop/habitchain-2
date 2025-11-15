@@ -1,5 +1,5 @@
 {
-  "HabitTrackerModule#HabitTracker": "0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972",
-  "MockStakingRewardsModule#MockStakingRewards": "0x554d6e4Df553FBa38A5Fadb863a3D77dBd9975d0",
-  "HabitSettlerModule#HabitSettler": "0x7689B05aE9bf0463371869048A2d553BF331F340"
+  "HabitTrackerModule#HabitTracker": "0x021df1E1B082b667291433753541747907C28E33",
+  "MockStakingRewardsModule#MockStakingRewards": "0x3506fE17674B11d316Aa3b1754455549863ab108",
+  "HabitSettlerModule#HabitSettler": "0x4Ec071E3F329AFc3dC866Af30089Ed201Ad5fC97"
 }
