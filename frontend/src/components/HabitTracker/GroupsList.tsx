@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { GroupCard } from "./GroupCard";
+import { Tooltip } from "../Tooltip";
 
 interface GroupMember {
   address: string;
@@ -124,7 +125,11 @@ export function GroupsList({
 
   return (
     <div className="section-card">
-      <h3>Groups (demo only)</h3>
+      <h3>
+        Groups (mocked{" "}
+        <Tooltip text="UI only" />
+        )
+      </h3>
       <div className="habits-list">
         {/* Creation card - always shown first */}
         <GroupCard
