@@ -13,6 +13,7 @@ import type { UserState } from "../../types/habit";
 import { Tooltip, TooltipWrapper } from "../Tooltip";
 import { useReadHabitTrackerStakingAdapter } from "../../generated";
 import { useChainId } from "wagmi";
+import { formatRewards } from "../../utils/habitHelpers";
 
 interface StatsBarProps {
   isConnected: boolean;
@@ -544,11 +545,11 @@ export function StatsBar({
                   <span style={{ color: "#4ade80" }}>
                     {" "}
                     +{" "}
-                    {(
+                    {formatRewards(
                       Math.ceil(
                         parseFloat(formatEther(userState.yieldRewards)) * 100
                       ) / 100
-                    ).toFixed(2)}{" "}
+                    )}{" "}
                     PAS
                   </span>
                 )}

@@ -33,3 +33,19 @@ export const parseDailyStatus = (flags: number) => {
   };
 };
 
+/**
+ * Format PAS rewards: if >= 1k, show as "1.1k" format without .00 decimals
+ * Otherwise show with 2 decimal places
+ */
+export const formatRewards = (value: number): string => {
+  if (value >= 1000) {
+    const thousands = value / 1000;
+    // Round to 1 decimal place
+    const rounded = Math.round(thousands * 10) / 10;
+    // Remove trailing .0 if present
+    return rounded % 1 === 0 ? `${Math.round(rounded)}k` : `${rounded}k`;
+  }
+  // For values < 1k, show with 2 decimals
+  return value.toFixed(2);
+};
+
