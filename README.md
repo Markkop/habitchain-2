@@ -16,7 +16,7 @@ By adding real consequences and immediate feedback, HabitChain closes the “mot
 - Address: [0x021df1E1B082b667291433753541747907C28E33](https://blockscout-passet-hub.parity-testnet.parity.io/address/0x021df1E1B082b667291433753541747907C28E33)
 - ABI: [https://github.com/Markkop/habitchain-2/blob/main/frontend/src/generated.ts#L102](https://github.com/Markkop/habitchain-2/blob/main/frontend/src/generated.ts#L102)
 
-- Project Hub: [https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0](https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0)
+- Project Hub (all details, links, everything): [https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0](https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0)
 - Milestone 2 Plan: [MILESTONE-2-PLAN.md](MILESTONE-2-PLAN.md)
 - Pitch Video: [https://youtu.be/dqDJDz2Ijxc](https://youtu.be/dqDJDz2Ijxc)
 - Demo Video: [https://youtu.be/XtYEVgNKxWM](https://youtu.be/XtYEVgNKxWM)
