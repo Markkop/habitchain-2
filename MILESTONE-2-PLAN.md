@@ -26,11 +26,15 @@
 - Groups feature (mocked UI only)
 - Sponsors and campaigns feature
 - Treasury management
+- Mobile First UI
+- Smooth Onboarding
+
 
 **Blockers or hurdles we hit:**
 - Real smart contract staking integration (we're thinking about using Moonwell)
 - Automatic settlement mechanism (epoch vs timestamps, timezone handling, etc.)
 - Bytecode optimization (need to refactor and optimize the contracts)
+- Account Abstraction integration
 
 ---
 
@@ -102,7 +106,10 @@ Withdraw of funds and rewards shall be possible.
 - Work on the Group Feature
 - Work on the Sponsors and Campaigns Feature
 - Work on Governance and Treasury Management
+- Work on Account Abstraction and onboarding improvement
 
 **And 6 months out we see our project achieve:**
-- 1000 active users
-- $500 funds deposited on the platform
+- 3,000 signups, 1,200 MAU, 300 DAU
+- $25k total funds deposited, $10k TVL, $5k rewards paid out
+- 100k+ completed check-ins, 70%+ completion rate on funded habits
+- 50+ active groups, 10+ sponsor/treasury campaigns
