@@ -18,9 +18,9 @@ By adding real consequences and immediate feedback, HabitChain closes the “mot
 
 - Project Hub: [https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0](https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0)
 - Milestone 2 Plan: [MILESTONE-2-PLAN.md](MILESTONE-2-PLAN.md)
-- Pitch Video: TODO
-- Demo Video: TODO
-- Pitch Deck: TODO
+- Pitch Video: [https://youtu.be/dqDJDz2Ijxc](https://youtu.be/dqDJDz2Ijxc)
+- Demo Video: [https://youtu.be/XtYEVgNKxWM](https://youtu.be/XtYEVgNKxWM)
+- Pitch Deck: [https://gamma.app/docs/HabitChain-f1dxb88fmqqd1zx?mode=present](https://gamma.app/docs/HabitChain-f1dxb88fmqqd1zx?mode=present)
 
 ## Testing Instructions
 
