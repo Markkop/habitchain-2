@@ -13,8 +13,14 @@ By adding real consequences and immediate feedback, HabitChain closes the “mot
 ## Details
 
 - Network: Paseo — Polkadot Hub Testnet (Passet Hub EVM)
-- Address: [0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972](https://blockscout-passet-hub.parity-testnet.parity.io/address/0x051BBa8e3b012DA48eeED11fEdF1DB189a3f0972)
-- ABI: [https://github.com/Markkop/habitchain-2/blob/5796cec97438a4a9e4a692102478c35a4d712931/frontend/src/generated.ts#L102](https://github.com/Markkop/habitchain-2/blob/5796cec97438a4a9e4a692102478c35a4d712931/frontend/src/generated.ts#L102)
+- Address: [0x021df1E1B082b667291433753541747907C28E33](https://blockscout-passet-hub.parity-testnet.parity.io/address/0x021df1E1B082b667291433753541747907C28E33)
+- ABI: [https://github.com/Markkop/habitchain-2/blob/main/frontend/src/generated.ts#L102](https://github.com/Markkop/habitchain-2/blob/main/frontend/src/generated.ts#L102)
+
+- Project Hub: [https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0](https://docs.google.com/document/d/1Eu4Ip90cX1-8Hu67yKhbQASp3VrLHapzO3fRKzjh1sA/edit?tab=t.0)
+- Milestone 2 Plan: [MILESTONE-2-PLAN.md](MILESTONE-2-PLAN.md)
+- Pitch Video: TODO
+- Demo Video: TODO
+- Pitch Deck: TODO
 
 ## Testing Instructions
 
@@ -41,10 +47,10 @@ This project was bootstraped with [kitdot](https://github.com/w3b3d3v/kitdot/) a
 
 ## Team
 
-- [Markkop](https://github.com/Markkop)
-- [dutragustavo](https://github.com/dutragustavo)
-- [hpereira1](https://github.com/hpereira1)
-- [artur-simon](https://github.com/artur-simon)
+- [Markkop](https://github.com/Markkop) - Founder & Builder
+- [dutragustavo](https://github.com/dutragustavo) - Smart Contracts & Blockchain Lead
+- [hpereira1](https://github.com/hpereira1) - Head of Product
+- [artur-simon](https://github.com/artur-simon) - Community & Marketing Lead
 
 ## References
 
